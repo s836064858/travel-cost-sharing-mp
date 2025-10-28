@@ -1,0 +1,292 @@
+/* pages/trip-detail/trip-detail.wxss */
+.trip-info {
+  margin-bottom: 20rpx;
+}
+
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.trip-name {
+  font-size: 40rpx;
+  font-weight: bold;
+  flex: 1;
+}
+
+.trip-status {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  color: white;
+}
+
+.trip-status.created {
+  background-color: #ff9500;
+}
+
+.trip-status.ongoing {
+  background-color: #07c160;
+}
+
+.trip-status.closed {
+  background-color: #999;
+}
+
+.trip-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  color: #666;
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 成员头像展示（精简） */
+.trip-avatars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+.trip-avatars .member-avatar {
+  width: 56rpx;
+  height: 56rpx;
+}
+
+.status-controls {
+  text-align: center;
+}
+
+.stats-section {
+  margin-bottom: 20rpx;
+}
+
+.stats-header {
+  margin-bottom: 30rpx;
+}
+
+.stats-title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: space-around;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #07c160;
+  margin-bottom: 10rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.actions-section {
+  margin-bottom: 20rpx;
+}
+
+.action-grid {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.action-item {
+  text-align: center;
+  padding: 20rpx;
+  flex: 0 0 20%;
+}
+
+.action-icon {
+  display: block;
+  font-size: 48rpx;
+  margin-bottom: 10rpx;
+}
+
+.action-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.btn-add {
+  background: none;
+  border: 1rpx solid #07c160;
+  color: #07c160;
+  border-radius: 6rpx;
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+}
+
+.members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.member-item:last-child {
+  border-bottom: none;
+}
+
+.member-info {
+  flex: 1;
+}
+
+.member-name {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.member-agent {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.member-net {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.btn-disable {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 6rpx;
+  padding: 12rpx 20rpx;
+  font-size: 24rpx;
+}
+
+.bills-section {
+  margin-bottom: 20rpx;
+}
+
+.view-all {
+  color: #07c160;
+  font-size: 28rpx;
+}
+
+.bills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.bill-item {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.bill-item:last-child {
+  border-bottom: none;
+}
+
+.bill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.bill-category {
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  font-size: 22rpx;
+  color: white;
+}
+
+.bill-category.food {
+  background-color: #ff9500;
+}
+
+.bill-category.transport {
+  background-color: #007aff;
+}
+
+.bill-category.lodging {
+  background-color: #5856d6;
+}
+
+.bill-category.ticket {
+  background-color: #ff2d55;
+}
+
+.bill-category.other {
+  background-color: #8e8e93;
+}
+
+.bill-amount {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #07c160;
+}
+
+.bill-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.empty-bills {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #999;
+}
+.member-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f0f0f0;
+  margin-right: 20rpx;
+}
+
+.member-avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.text-avatar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: #666;
+}

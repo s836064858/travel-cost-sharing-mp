@@ -1,0 +1,343 @@
+/* pages/settlement-view/settlement-view.wxss */
+.settlement-section {
+  margin-bottom: 20rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.btn-refresh {
+  background: none;
+  border: 1rpx solid #07c160;
+  color: #07c160;
+  border-radius: 6rpx;
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+}
+
+.agent-section {
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.agent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.agent-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.agent-toggle {
+  color: #07c160;
+  font-size: 24rpx;
+}
+
+.agent-list {
+  margin-top: 20rpx;
+}
+
+.agent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.agent-item:last-child {
+  border-bottom: none;
+}
+
+.agent-info {
+  flex: 1;
+}
+
+.agent-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 5rpx;
+}
+
+.agent-delegates {
+  font-size: 22rpx;
+  color: #666;
+}
+
+.agent-status {
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+  font-size: 20rpx;
+  color: white;
+}
+
+.agent-status.active {
+  background-color: #07c160;
+}
+
+.agent-status.inactive {
+  background-color: #999;
+}
+
+.settlement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.settlement-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.settlement-item:last-child {
+  border-bottom: none;
+}
+
+.settlement-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.from-member, .to-member {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.to-member {
+  color: #666;
+}
+
+.settlement-amount {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #07c160;
+}
+
+.settlement-actions {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.btn-mark-paid {
+  background-color: #07c160;
+  color: white;
+  border: none;
+  border-radius: 6rpx;
+  padding: 12rpx 20rpx;
+  font-size: 24rpx;
+}
+
+.btn-mark-paid.paid {
+  background-color: #999;
+}
+
+.paid-status {
+  color: #07c160;
+  font-size: 24rpx;
+}
+
+.empty-settlement {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #999;
+}
+
+.agent-config-section {
+  margin-bottom: 20rpx;
+}
+
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.picker-field {
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.members-section {
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 20rpx;
+}
+
+.member-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15rpx;
+  padding: 10rpx 0;
+}
+
+.member-checkbox:last-child {
+  margin-bottom: 0;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.member-name {
+  margin-left: 15rpx;
+  font-size: 26rpx;
+}
+
+.member-name.disabled {
+  color: #999;
+}
+
+.agent-note {
+  margin-left: 10rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.agent-actions {
+  display: flex;
+  gap: 20rpx;
+  justify-content: flex-end;
+}
+
+.agent-management {
+  margin-bottom: 20rpx;
+}
+
+.agent-management-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.managed-agent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.managed-agent:last-child {
+  border-bottom: none;
+}
+
+.agent-details {
+  flex: 1;
+}
+
+/* Avatars and names in settlement list */
+.party {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.member-avatar {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.member-avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.text-avatar {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.arrow {
+  color: #999;
+  font-size: 24rpx;
+}
+
+.delegate-count {
+  font-size: 22rpx;
+  color: #666;
+}
+
+.agent-controls {
+  display: flex;
+  gap: 10rpx;
+}
+
+.btn-toggle {
+  background: none;
+  border: 1rpx solid #ddd;
+  border-radius: 6rpx;
+  padding: 8rpx 16rpx;
+  font-size: 22rpx;
+}
+
+.btn-toggle.active {
+  border-color: #ff4d4f;
+  color: #ff4d4f;
+}
+
+.btn-toggle.inactive {
+  border-color: #07c160;
+  color: #07c160;
+}
+
+.btn-edit {
+  background: none;
+  border: 1rpx solid #007aff;
+  color: #007aff;
+  border-radius: 6rpx;
+  padding: 8rpx 16rpx;
+  font-size: 22rpx;
+}
+
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 20rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.btn-set-agent {
+  width: 100%;
+}

@@ -1,0 +1,46 @@
+<!--pages/home/home.wxml-->
+<view class="page-container">
+    <!-- 头部形象区 -->
+    <view class="hero">
+        <view class="brand">四月旅行账单</view>
+        <view class="subtitle">旅行分摊 · 简洁清晰</view>
+    </view>
+
+    <!-- 用户信息区域（未授权占位） -->
+    <view class="card user-info">
+        <view class="user-row">
+            <view class="user-avatar">
+                <image src="{{(userInfo && userInfo.avatarUrl) || defaultAvatar}}" mode="aspectFill"></image>
+            </view>
+            <view class="user-meta">
+                <view class="user-name">{{(userInfo && userInfo.nickName) || '未授权用户'}}</view>
+                <view class="user-action" bindtap="editProfile">编辑资料</view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 操作入口 -->
+    <view class="card">
+        <view class="section-title">快捷入口</view>
+        <view class="actions-grid">
+            <view class="grid-item" bindtap="createNewTrip">
+                <image class="grid-icon" src="../../images/home.png" mode="widthFix"></image>
+                <view class="grid-label">创建旅行</view>
+            </view>
+            <view class="grid-item" bindtap="goToHistory">
+                <image class="grid-icon" src="../../images/history.png" mode="widthFix"></image>
+                <view class="grid-label">历史记录</view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 使用须知 -->
+    <view class="card">
+        <view class="section-title">使用须知</view>
+        <view class="tip-text">· 个人资料：设置头像与昵称，完善后可加入旅行</view>
+        <view class="tip-text">· 创建旅行：生成二维码邀请成员，满2人可创建账单</view>
+        <view class="tip-text">· 旅行详情：添加账单、分摊与结算，支持邀请/移除成员</view>
+        <view class="tip-text">· 历史记录：查看已创建旅行，按状态筛选与跳转详情</view>
+        <view class="tip-text">· 结算视图：查看每人应付/应收，一键标记结清</view>
+    </view>
+</view>

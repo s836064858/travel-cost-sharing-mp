@@ -1,0 +1,136 @@
+<!--pages/bill-create/bill-create.wxml-->
+<view class="page-container">
+    <view class="page-header">
+        <text class="page-title">{{billId ? '编辑账单' : '新增账单'}}</text>
+    </view>
+    <view class="card">
+        <form bindsubmit="submitBill">
+            <view class="section">
+                <text class="section-title">基本信息</text>
+                <!-- 付款人选择 -->
+                <view class="form-group">
+                    <label class="form-label">付款人</label>
+                    <picker mode="selector" range="{{members}}" range-key="nickName" value="{{payerIndex}}"
+                        bindchange="onPayerChange">
+                        <view class="picker-field picker-with-avatar">
+                            <block wx:if="{{members[payerIndex]}}">
+                                <view class="member-avatar">
+                                    <image wx:if="{{members[payerIndex].avatarUrl}}"
+                                        src="{{members[payerIndex].avatarUrl}}" mode="aspectFill" />
+                                    <view wx:else class="text-avatar">{{members[payerIndex].shortName || '成员'}}</view>
+                                </view>
+                                <text class="member-name">{{members[payerIndex].nickName}}</text>
+                            </block>
+                            <block wx:else>请选择付款人</block>
+                        </view>
+                    </picker>
+                </view>
+
+                <!-- 金额 -->
+                <view class="form-group">
+                    <label class="form-label">金额</label>
+                    <input data-name="amount" type="digit" class="input-field" placeholder="请输入金额"
+                        value="{{formData.amount}}" bindinput="onInputChange" />
+                </view>
+
+                <!-- 分类 -->
+                <view class="form-group">
+                    <label class="form-label">分类</label>
+                    <picker mode="selector" range="{{categoryOptions}}" value="{{categoryIndex}}"
+                        bindchange="onCategoryChange">
+                        <view class="picker-field">{{categoryOptions[categoryIndex] || '请选择分类'}}</view>
+                    </picker>
+                </view>
+
+                <!-- 日期 -->
+                <view class="form-group">
+                    <label class="form-label">日期</label>
+                    <picker mode="date" value="{{formData.date}}" bindchange="onDateChange">
+                        <view class="picker-field">{{formData.date || '请选择日期'}}</view>
+                    </picker>
+                </view>
+
+                <!-- 备注 -->
+                <view class="form-group">
+                    <label class="form-label">备注（可选）</label>
+                    <input data-name="note" class="input-field" placeholder="请输入备注" maxlength="200"
+                        value="{{formData.note}}" bindinput="onInputChange" />
+                </view>
+
+            </view>
+
+            <!-- 分摊设置 -->
+            <view class="section">
+                <text class="section-title">分摊设置</text>
+                <!-- 分摊方式 -->
+                <view class="form-group">
+                    <label class="form-label">分摊方式</label>
+                    <radio-group bindchange="onSplitMethodChange">
+                        <label class="radio-item">
+                            <radio value="equal" checked="{{formData.splitMethod === 'equal'}}" /> 均分
+                        </label>
+                        <label class="radio-item">
+                            <radio value="custom" checked="{{formData.splitMethod === 'custom'}}" /> 自定义
+                        </label>
+                    </radio-group>
+                </view>
+
+                <!-- 参与分摊成员 -->
+                <view class="form-group">
+                    <label class="form-label">参与分摊成员</label>
+                    <checkbox-group bindchange="onParticipantsChange">
+                        <view class="members-section">
+                            <view wx:for="{{members}}" wx:key="id" class="member-checkbox">
+                                <label class="checkbox-item">
+                                    <checkbox value="{{item.id}}" checked="{{item.checked}}" />
+                                    <view class="member-avatar">
+                                        <image wx:if="{{item.avatarUrl}}" src="{{item.avatarUrl}}" mode="aspectFill" />
+                                        <view wx:else class="text-avatar">{{item.shortName || '成员'}}</view>
+                                    </view>
+                                    <text class="member-name">{{item.nickName || item.displayName || '成员'}}</text>
+                                    <text class="share-amount"
+                                        wx:if="{{formData.splitMethod === 'equal' && item.checked}}">
+                                        {{getShareAmount(item.id)}}
+                                    </text>
+                                </label>
+                                <input wx:if="{{formData.splitMethod === 'custom' && item.checked}}"
+                                    class="custom-amount" type="digit" placeholder="金额"
+                                    value="{{getCustomAmount(item.id)}}" bindinput="onCustomAmountChange"
+                                    data-member-id="{{item.id}}" />
+                            </view>
+                        </view>
+                    </checkbox-group>
+                </view>
+            </view>
+
+            <!-- 分摊预览 -->
+            <view class="form-group" wx:if="{{formData.amount && formData.participants.length > 0}}">
+                <label class="form-label">分摊预览</label>
+                <view class="preview-section">
+                    <view wx:for="{{sharePreview}}" wx:key="memberId" class="preview-item">
+                        <view class="checkbox-item">
+                            <view class="member-avatar">
+                                <image wx:if="{{item.avatarUrl}}" src="{{item.avatarUrl}}" mode="aspectFill" />
+                                <view wx:else class="text-avatar">{{item.shortName || '成员'}}</view>
+                            </view>
+                            <text class="member-name">{{item.nickName || item.displayName || '成员'}}</text>
+                        </view>
+                        <text class="preview-amount">{{item.amount}}</text>
+                    </view>
+                    <view class="preview-total">
+                        <text>总计：{{formData.amount}}</text>
+                        <text class="preview-diff {{isZeroDiff ? 'zero' : 'non-zero'}}">差额：{{previewDiff}}</text>
+                    </view>
+                </view>
+            </view>
+
+            <!-- 操作按钮 -->
+            <view class="action-buttons">
+                <button class="btn-danger" wx:if="{{billId}}" bindtap="deleteBill">删除账单</button>
+                <button class="btn-secondary" wx:if="{{billId}}" bindtap="cancelEdit">取消</button>
+                <button class="btn-primary" formType="submit"
+                    disabled="{{!isFormValid}}">{{billId ? '保存修改' : '创建账单'}}</button>
+            </view>
+        </form>
+    </view>
+</view>

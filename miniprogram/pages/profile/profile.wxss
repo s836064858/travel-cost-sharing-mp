@@ -1,0 +1,4 @@
+/* pages/profile/profile.wxss */
+.section-title { font-size: 32rpx; font-weight: 600; margin-bottom: 16rpx; }
+.avatar-row { display: flex; align-items: center; gap: 20rpx; }
+.avatar { width: 100rpx; height: 100rpx; border-radius: 50%; background: #f0f0f0; }

@@ -1,0 +1,19 @@
+<view class="page-container">
+    <view class="card">
+        <view class="section-title">头像</view>
+        <view class="avatar-row">
+            <image class="avatar" src="{{avatarUrl || defaultAvatar}}" mode="aspectFill"></image>
+            <button class="btn-secondary" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">选择头像</button>
+        </view>
+    </view>
+
+    <view class="card">
+        <view class="section-title">昵称</view>
+        <input class="input-field" type="nickname" bindinput="onNickInput" placeholder="点击以获取昵称或输入"
+            value="{{nickName}}" />
+    </view>
+
+    <view class="card">
+        <button class="btn-primary" bindtap="onSave">保存</button>
+    </view>
+</view>

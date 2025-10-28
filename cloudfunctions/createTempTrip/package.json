@@ -1,0 +1,9 @@
+{
+  "name": "createTempTrip",
+  "version": "1.0.0",
+  "description": "Generate mini program code for temporary trip and record members",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

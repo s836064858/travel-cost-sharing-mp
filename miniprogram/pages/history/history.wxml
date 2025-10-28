@@ -1,0 +1,40 @@
+<!--pages/history/history.wxml-->
+<view class="page-container">
+    <!-- 标签页切换 -->
+    <view class="tabs">
+        <view class="tab {{activeTab === 'ongoing' ? 'active' : ''}}" bindtap="switchTab" data-tab="ongoing">
+            进行中
+        </view>
+        <view class="tab {{activeTab === 'closed' ? 'active' : ''}}" bindtap="switchTab" data-tab="closed">
+            已结束
+        </view>
+    </view>
+
+    <!-- 旅行列表 -->
+    <view class="trip-list">
+        <view wx:for="{{trips}}" wx:key="_id" class="trip-item card" bindtap="viewTripDetail" data-trip="{{item}}">
+            <view class="trip-header">
+                <text class="trip-name">{{item.name}}</text>
+                <text
+                    class="trip-status {{item.status}}">{{item.status === 'created' ? '未开始' : item.status === 'ongoing' ? '进行中' : '已结束'}}</text>
+            </view>
+            <view class="member-avatars">
+                <block wx:for="{{item.members}}" wx:for-item="member" wx:key="id">
+                    <image wx:if="{{member.avatarUrl}}" class="avatar" src="{{member.avatarUrl}}" mode="aspectFill">
+                    </image>
+                    <view wx:else class="text-avatar">{{member.initials}}</view>
+                </block>
+            </view>
+            <view class="trip-footer">
+                <text>成员：{{item.members.length}}人</text>
+                <text class="owner-badge" wx:if="{{item.ownerOpenid === userInfo.openid}}">我创建</text>
+            </view>
+        </view>
+
+        <!-- 空状态 -->
+        <view class="empty-state" wx:if="{{trips.length === 0}}">
+            <text class="empty-text">暂无{{activeTab === 'ongoing' ? '进行中' : '已结束'}}的旅行</text>
+            <button class="btn-primary" bindtap="createNewTrip">创建新旅行</button>
+        </view>
+    </view>
+</view>

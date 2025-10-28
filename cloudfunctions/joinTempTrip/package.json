@@ -1,0 +1,9 @@
+{
+  "name": "joinTempTrip",
+  "version": "1.0.0",
+  "description": "Join a temporary trip by tripId",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

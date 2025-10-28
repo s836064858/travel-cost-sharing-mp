@@ -1,0 +1,79 @@
+/* pages/home/home.wxss */
+.user-info {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+}
+
+.user-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20rpx;
+}
+
+.user-avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.user-name {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+}
+
+.user-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20rpx;
+}
+
+.user-avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.user-name {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.profile-section {
+  padding: 20rpx 30rpx;
+}
+
+.profile-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 32rpx;
+}
+
+/* 新增首页样式 */
+.hero {
+  background: linear-gradient(135deg, #6EE7B7 0%, #3B82F6 100%);
+  color: #fff;
+  border-radius: 12rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 20rpx;
+}
+.brand { font-size: 48rpx; font-weight: 700; }
+.subtitle { margin-top: 8rpx; opacity: 0.9; }
+
+.user-row { display: flex; align-items: center; gap: 20rpx; }
+.user-meta { display: flex; flex-direction: column; gap: 6rpx; }
+.user-action { color: #07c160; font-size: 26rpx; }
+
+.actions-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20rpx; }
+.grid-item { background: #f7f7f7; border-radius: 12rpx; padding: 24rpx; text-align: center; }
+.grid-icon { width: 64rpx; height: 64rpx; }
+.grid-label { margin-top: 8rpx; font-size: 28rpx; color: #333; }

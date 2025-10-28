@@ -1,0 +1,39 @@
+# macOS
+.DS_Store
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log
+pnpm-debug.log
+
+# WeChat Mini Program DevTools
+project.private.config.json
+miniprogram/.cache/
+miniprogram/node_modules/
+miniprogram/npm/
+
+# Cloud Functions (Tencent Cloud)
+cloudfunctions/*/node_modules/
+cloudfunctions/*/.env
+cloudfunctions/*/*.log
+
+# IDE & Editor
+.vscode/
+.idea/
+
+# Logs & Temp
+logs/
+*.log
+*.tmp
+
+# Build outputs
+dist/
+build/
+
+# Environment files
+.env
+.env.*
+
+# Testing & Coverage
+coverage/

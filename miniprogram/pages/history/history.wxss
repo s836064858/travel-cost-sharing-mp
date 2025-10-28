@@ -1,0 +1,122 @@
+/* pages/history/history.wxss */
+.tabs {
+  display: flex;
+  background: white;
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.04);
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 32rpx;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.tab.active {
+  color: #07c160;
+  background-color: #f0f9f4;
+  font-weight: bold;
+}
+
+.trip-item {
+  margin-bottom: 20rpx;
+}
+
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.trip-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  flex: 1;
+}
+
+.trip-status {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  color: white;
+}
+
+.trip-status.created {
+  background-color: #ff9500;
+}
+
+.trip-status.ongoing {
+  background-color: #07c160;
+}
+
+.trip-status.closed {
+  background-color: #999;
+}
+
+.trip-info {
+  display: flex;
+  flex-direction: row;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+  color: #666;
+  font-size: 28rpx;
+}
+
+.trip-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.owner-badge {
+  background-color: #e6f3ff;
+  color: #1890ff;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  font-size: 22rpx;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80rpx 0;
+}
+
+.empty-text {
+  display: block;
+  margin-bottom: 40rpx;
+  color: #999;
+  font-size: 32rpx;
+}
+.member-avatars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.member-avatars .avatar {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #f0f0f0;
+}
+
+.member-avatars .text-avatar {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  color: #666;
+}
