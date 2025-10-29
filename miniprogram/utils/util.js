@@ -116,10 +116,11 @@ const getRandomColor = () => {
   return colors[Math.floor(Math.random() * colors.length)]
 }
 
-// 成员查找工具：根据 id 返回成员对象（未找到则返回空对象）
+// 成员查找工具：根据 id 或 memberId 返回成员对象（兼容字符串/数字）
 const getMemberById = (members, memberId) => {
   if (!Array.isArray(members)) return {}
-  const member = members.find((m) => m.id === memberId)
+  const target = memberId == null ? '' : String(memberId)
+  const member = members.find((m) => String(m.id) === target || String(m.memberId) === target)
   return member || {}
 }
 

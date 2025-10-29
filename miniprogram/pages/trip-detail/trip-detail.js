@@ -39,9 +39,25 @@ Page({
           .filter((member) => member.active)
           .map((m) => ({
             ...m,
-            initials: m.name.slice(-2)
+            initials: (m.name || '').slice(-2)
           }))
-        this.setData({ activeMembers })
+        // 为每个成员计算代理人对象，避免在 WXML 中调用方法
+        const withAgents = activeMembers.map((m) => {
+          const agent = m.agentMemberId ? getMemberById(activeMembers, m.agentMemberId) : {}
+          return {
+            ...m,
+            agent:
+              agent && agent.id
+                ? {
+                    id: agent.id,
+                    name: agent.name,
+                    avatarUrl: agent.avatarUrl,
+                    initials: (agent.name || '').slice(-2)
+                  }
+                : null
+          }
+        })
+        this.setData({ activeMembers: withAgents })
 
         await this.loadRecentBills()
 
@@ -129,12 +145,6 @@ Page({
     }
   },
 
-  // 获取成员名称
-  getMemberName(memberId) {
-    const member = getMemberById(this.data.activeMembers, memberId)
-    return member.name || '未知成员'
-  },
-
   // 结束旅行
   async endTrip() {
     wx.showModal({
@@ -166,11 +176,37 @@ Page({
       return
     }
     const names = candidates.map((m) => m.name || '成员')
+    const hasAgent = !!getMemberById(this.data.activeMembers, memberId).agentMemberId
+    const itemList = hasAgent ? ['取消代理', ...names] : names
     wx.showActionSheet({
-      itemList: names,
+      itemList: itemList,
       success: (res) => {
         const idx = res.tapIndex
-        const agent = candidates[idx]
+        if (hasAgent && idx === 0) {
+          // 取消代理
+          wx.cloud
+            .callFunction({
+              name: 'saveMemberAgent',
+              data: {
+                tripId: this.data.tripId,
+                delegateMemberId: memberId,
+                agentMemberId: ''
+              }
+            })
+            .then((resp) => {
+              if (resp && resp.result && resp.result.success) {
+                wx.showToast({ title: '已取消代理', icon: 'success' })
+                this.loadTripDetail()
+              } else {
+                wx.showToast({ title: (resp && resp.result && resp.result.message) || '取消失败', icon: 'none' })
+              }
+            })
+            .catch(() => {
+              wx.showToast({ title: '取消失败', icon: 'none' })
+            })
+          return
+        }
+        const agent = candidates[hasAgent ? idx - 1 : idx]
         if (agent) {
           wx.cloud
             .callFunction({
@@ -181,10 +217,13 @@ Page({
                 agentMemberId: agent.id
               }
             })
-            .then(() => {
-              wx.showToast({ title: '已设置代理人', icon: 'success' })
-              // 刷新旅行详情，展示代理人
-              this.loadTripDetail()
+            .then((resp) => {
+              if (resp && resp.result && resp.result.success) {
+                wx.showToast({ title: '已设置代理人', icon: 'success' })
+                this.loadTripDetail()
+              } else {
+                wx.showToast({ title: (resp && resp.result && resp.result.message) || '设置失败', icon: 'none' })
+              }
             })
             .catch(() => {
               wx.showToast({ title: '设置失败', icon: 'none' })

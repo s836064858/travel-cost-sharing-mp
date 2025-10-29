@@ -37,7 +37,13 @@
         </view>
         <view class="member-info">
           <text class="member-name">{{ item.name }}</text>
-          <text class="member-agent" wx:if="{{ item.agentMemberId }}"> 代理：{{ getMemberName(item.agentMemberId) }} </text>
+          <view class="member-agent" style="display: flex; align-items: center" wx:if="{{ item.agent }}">
+            <text style="font-size: 24rpx; color: #666">代理：</text>
+            <view class="member-avatar" style="width: 56rpx; height: 56rpx; border: 2rpx solid #07c160">
+              <image wx:if="{{ item.agent.avatarUrl }}" src="{{ item.agent.avatarUrl }}" mode="aspectFill" />
+              <view wx:else class="text-avatar">{{ item.agent.initials }}</view>
+            </view>
+          </view>
         </view>
         <button class="btn-secondary" bindtap="setMemberAgent" data-member-id="{{ item.id }}" wx:if="{{ trip.status !== 'closed' }}">设代理</button>
       </view>
