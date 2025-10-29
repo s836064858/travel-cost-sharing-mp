@@ -192,23 +192,20 @@ Page({
   // 参与成员变化
   onParticipantsChange(e) {
     const selected = e.detail.value || []
-    this.setData({ 'formData.participants': selected })
-    const members = [...this.data.members]
-    members.forEach((member) => {
-      if (selected.includes(member.id)) {
-        member.checked = true
-      } else {
-        member.checked = false
-      }
-    })
-    this.setData({ members })
+    const selectedSet = new Set(selected)
+    const members = this.data.members.map((member) => ({
+      ...member,
+      checked: selectedSet.has(member.id)
+    }))
+    this.setData({ 'formData.participants': selected, members })
     this.calculatePreview()
   },
 
   // 自定义金额变化
   onCustomAmountChange(e) {
     const memberId = e.currentTarget.dataset.memberId
-    const value = parseFloat(e.detail.value) || 0
+    const parsed = parseFloat(e.detail.value)
+    const value = Number.isFinite(parsed) ? parsed : 0
     const customAmounts = { ...this.data.formData.customAmounts }
     customAmounts[memberId] = value
 
@@ -237,25 +234,25 @@ Page({
     return this.data.formData.customAmounts[memberId] || ''
   },
 
-  // 计算分摊预览
-  calculatePreview() {
-    const amount = parseFloat(this.data.formData.amount) || 0
-    const participants = this.data.formData.participants
+  // 纯函数：根据当前表单与成员计算分摊预览与差额
+  getSharesPreview(formData, members) {
+    const amount = parseFloat(formData.amount) || 0
+    const participants = formData.participants || []
 
     if (amount === 0 || participants.length === 0) {
-      this.setData({ previewDiff: 0, isZeroDiff: true, sharePreview: [] })
-      return []
+      return { shares: [], diff: 0 }
     }
 
+    const memberMap = new Map(members.map((m) => [m.id, m]))
     let shares = []
     let total = 0
 
-    if (this.data.formData.splitMethod === 'equal') {
+    if (formData.splitMethod === 'equal') {
       const shareAmount = Math.floor((amount * 100) / participants.length) / 100
       const lastShare = amount - shareAmount * (participants.length - 1)
 
       shares = participants.map((memberId, index) => {
-        const m = this.data.members.find((mm) => mm.id === memberId) || {}
+        const m = memberMap.get(memberId) || {}
         const mAmount = index === participants.length - 1 ? lastShare : shareAmount
         total += mAmount
         return {
@@ -263,26 +260,32 @@ Page({
           amount: mAmount.toFixed(2),
           name: m.name,
           avatarUrl: m.avatarUrl,
-          shortName: getShortName(m.name)
+          shortName: getShortName(m.name || '')
         }
       })
     } else {
       shares = participants.map((memberId) => {
-        const m = this.data.members.find((mm) => mm.id === memberId) || {}
-        const mAmount = this.data.formData.customAmounts[memberId] || 0
+        const m = memberMap.get(memberId) || {}
+        const mAmount = parseFloat(formData.customAmounts[memberId] || 0)
         total += mAmount
         return {
           memberId,
           amount: mAmount.toFixed(2),
           name: m.name,
           avatarUrl: m.avatarUrl,
-          shortName: getShortName(m.name)
+          shortName: getShortName(m.name || '')
         }
       })
     }
 
-    const diff = (amount - total).toFixed(2)
-    this.setData({ previewDiff: diff, isZeroDiff: parseFloat(diff) === 0, sharePreview: shares })
+    const diff = Number((amount - total).toFixed(2))
+    return { shares, diff }
+  },
+
+  // 更新预览（包装到 setData）
+  calculatePreview() {
+    const { shares, diff } = this.getSharesPreview(this.data.formData, this.data.members)
+    this.setData({ previewDiff: diff.toFixed(2), isZeroDiff: diff === 0, sharePreview: shares })
     return shares
   },
 
@@ -301,7 +304,13 @@ Page({
       wx.showLoading({ title: this.data.billId ? '保存中...' : '创建中...' })
 
       // 计算分摊金额
-      const shares = this.calculatePreview().map((item) => ({
+      const { shares, diff } = this.getSharesPreview(this.data.formData, this.data.members)
+      // 自定义分摊需平衡
+      if (this.data.formData.splitMethod !== 'equal' && diff !== 0) {
+        wx.showToast({ title: '自定义分摊未平衡', icon: 'none' })
+        return
+      }
+      const payloadShares = shares.map((item) => ({
         memberId: item.memberId,
         shareAmount: parseFloat(item.amount)
       }))
@@ -320,7 +329,7 @@ Page({
             date: this.data.formData.date,
             note: this.data.formData.note,
             splitMethod: this.data.formData.splitMethod,
-            shares
+            shares: payloadShares
           }
         })
       } else {
@@ -335,7 +344,7 @@ Page({
             date: this.data.formData.date,
             note: this.data.formData.note,
             splitMethod: this.data.formData.splitMethod,
-            shares
+            shares: payloadShares
           }
         })
       }

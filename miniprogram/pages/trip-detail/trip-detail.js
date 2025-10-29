@@ -77,7 +77,52 @@ Page({
       })
 
       if (result.result.success) {
-        this.setData({ recentBills: result.result.data })
+        const bills = result.result.data || []
+        const activeMembers = this.data.activeMembers || []
+        const categoryTextMap = { food: '餐饮', transport: '交通', lodging: '住宿', ticket: '门票', other: '其他' }
+
+        const enriched = bills.map((b) => {
+          const payer = getMemberById(activeMembers, String(b.payerMemberId))
+          const participants = (b.shares || []).map((s) => {
+            const m = getMemberById(activeMembers, String(s.memberId))
+            return {
+              id: m.id,
+              name: m.name,
+              avatarUrl: m.avatarUrl,
+              initials: (m.name || '').slice(-2)
+            }
+          })
+          // 合并支付人与参与人，支付人置顶且去重
+          const displayParticipants = (() => {
+            const list = []
+            const pushUnique = (m) => {
+              if (!m || !m.id) return
+              if (!list.find((x) => x.id === m.id)) list.push(m)
+            }
+            const payerLite = {
+              id: payer.id,
+              name: payer.name,
+              avatarUrl: payer.avatarUrl,
+              initials: (payer.name || '').slice(-2)
+            }
+            pushUnique(payerLite)
+            participants.forEach(pushUnique)
+            return list
+          })()
+          return {
+            ...b,
+            categoryText: categoryTextMap[b.category] || '其他',
+            payer: {
+              id: payer.id,
+              name: payer.name,
+              avatarUrl: payer.avatarUrl,
+              initials: (payer.name || '').slice(-2)
+            },
+            participants,
+            displayParticipants
+          }
+        })
+        this.setData({ recentBills: enriched })
       }
     } catch (error) {
       console.error('加载账单失败:', error)
@@ -153,7 +198,7 @@ Page({
   addMember() {
     wx.showModal({
       title: '添加成员',
-      content: '请输入成员姓名',
+      placeholderText: '请输入成员姓名',
       editable: true,
       success: async (res) => {
         if (res.confirm && res.content.trim()) {

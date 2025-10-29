@@ -5,6 +5,7 @@
         <view class="section-header">
             <text class="section-title">结算建议</text>
             <view class="header-actions">
+                <text class="section-subtitle">共 {{settlements.length}} 条</text>
                 <text class="finalized-tag" wx:if="{{isFinalized}}">已结算</text>
             </view>
         </view>
@@ -13,23 +14,24 @@
             <view wx:for="{{settlements}}" wx:key="_id" class="settlement-item">
                 <view class="settlement-info">
                     <view class="party">
-                        <view class="member-avatar">
+                        <view class="member-avatar payer">
                             <image wx:if="{{item.fromAvatarUrl}}" src="{{item.fromAvatarUrl}}" mode="aspectFill" />
                             <view wx:else class="text-avatar">{{item.fromShortName || '成员'}}</view>
+                            <view class="avatar-badge">付</view>
                         </view>
                         <text class="member-name">{{item.fromName}}</text>
                     </view>
-                    <text class="arrow">→</text>
+                    <view class="arrow-wrap"><text class="arrow">→</text></view>
                     <view class="party">
-                        <view class="member-avatar">
+                        <view class="member-avatar receiver">
                             <image wx:if="{{item.toAvatarUrl}}" src="{{item.toAvatarUrl}}" mode="aspectFill" />
                             <view wx:else class="text-avatar">{{item.toShortName || '成员'}}</view>
+                            <view class="avatar-badge receiver">收</view>
                         </view>
                         <text class="member-name">{{item.toName}}</text>
                     </view>
-                    <text class="settlement-amount">{{item.amount}}</text>
+                    <view class="amount-chip">¥{{item.amount}}</view>
                 </view>
-                <view class="settlement-actions"></view>
             </view>
             <view class="empty-settlement" wx:if="{{settlements.length === 0}}">
                 <text>暂无结算建议</text>

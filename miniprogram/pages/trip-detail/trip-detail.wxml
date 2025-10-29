@@ -51,23 +51,20 @@
     <view class="bills-list">
       <view wx:for="{{ recentBills }}" wx:key="_id" class="bill-item" bindtap="editBill" data-bill="{{ item }}">
         <view class="bill-header">
-          <view class="bill-category {{ item.category }}"
-            >{{
-              item.category === 'food'
-                ? '餐饮'
-                : item.category === 'transport'
-                ? '交通'
-                : item.category === 'lodging'
-                ? '住宿'
-                : item.category === 'ticket'
-                ? '门票'
-                : '其他'
-            }}
-          </view>
+          <view class="bill-category {{ item.category }}">{{ item.categoryText }}</view>
           <text class="bill-amount">{{ item.amount }}</text>
         </view>
         <view class="bill-info">
-          <text class="bill-payer">{{ getMemberName(item.payerMemberId) }} 支付</text>
+          <view class="bill-participants">
+            <text class="bill-participants-label">支付与参与</text>
+            <view class="avatars-list stacked">
+              <view wx:for="{{ item.displayParticipants }}" wx:for-item="p" wx:for-index="idx" wx:key="id" class="avatar-small {{ idx === 0 ? 'payer' : '' }}">
+                <image wx:if="{{ p.avatarUrl }}" src="{{ p.avatarUrl }}" mode="aspectFill" />
+                <view wx:else class="text-avatar-small">{{ p.initials }}</view>
+                <view wx:if="{{ idx === 0 }}" class="avatar-badge">付</view>
+              </view>
+            </view>
+          </view>
           <text class="bill-date">{{ item.date }}</text>
         </view>
       </view>
