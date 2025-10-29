@@ -1,11 +1,10 @@
-<!--pages/home/home.wxml-->
+<!-- pages/home/home.wxml -->
 <view class="page-container">
     <!-- 头部形象区 -->
     <view class="hero">
         <view class="brand">四月旅行账单</view>
         <view class="subtitle">旅行分摊 · 简洁清晰</view>
     </view>
-
     <!-- 用户信息区域（未授权占位） -->
     <view class="card user-info">
         <view class="user-row">
@@ -18,7 +17,6 @@
             </view>
         </view>
     </view>
-
     <!-- 操作入口 -->
     <view class="card">
         <view class="section-title">快捷入口</view>
@@ -33,7 +31,6 @@
             </view>
         </view>
     </view>
-
     <!-- 使用须知 -->
     <view class="card">
         <view class="section-title">使用须知</view>

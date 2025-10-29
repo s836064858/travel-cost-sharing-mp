@@ -1,4 +1,4 @@
-<!--pages/settlement-view/settlement-view.wxml-->
+<!-- pages/settlement-view/settlement-view.wxml -->
 <view class="page-container">
     <!-- 结算建议 -->
     <view class="card settlement-section">
@@ -8,7 +8,6 @@
                 <text class="finalized-tag" wx:if="{{isFinalized}}">已结算</text>
             </view>
         </view>
-
         <!-- 结算列表 -->
         <view class="settlement-list">
             <view wx:for="{{settlements}}" wx:key="_id" class="settlement-item">
@@ -32,13 +31,12 @@
                 </view>
                 <view class="settlement-actions"></view>
             </view>
-
             <view class="empty-settlement" wx:if="{{settlements.length === 0}}">
                 <text>暂无结算建议</text>
             </view>
         </view>
-
-
-        <button class="btn-confirm" wx:if="{{showConfirmButton}}" bindtap="confirmSettlement">确认结算</button>
+        <button class="btn-confirm" wx:if="{{showConfirmButton}}" bindtap="confirmSettlement">
+            确认结算
+        </button>
     </view>
 </view>

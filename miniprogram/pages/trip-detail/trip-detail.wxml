@@ -1,74 +1,79 @@
-<!--pages/trip-detail/trip-detail.wxml-->
+<!-- pages/trip-detail/trip-detail.wxml -->
 <view class="page-container">
-    <!-- 旅行基本信息 -->
-    <view class="card trip-info">
-        <view class="trip-header">
-            <text class="trip-name">{{trip.name}}</text>
-            <text
-                class="trip-status {{trip.status}}">{{trip.status === 'created' ? '未开始' : trip.status === 'ongoing' ? '进行中' : '已结束'}}</text>
-        </view>
+  <!-- 旅行基本信息 -->
+  <view class="card trip-info">
+    <view class="trip-header">
+      <text class="trip-name">{{ trip.name }}</text>
+      <text class="trip-status {{ trip.status }}">{{ trip.status === 'created' ? '未开始' : trip.status === 'ongoing' ? '进行中' : '已结束' }} </text>
     </view>
-
-    <!-- 功能入口 -->
-    <view class="card actions-section" wx:if="{{trip.status === 'ongoing'}}">
-        <view class="action-grid">
-            <view class="action-item" bindtap="addBill">
-                <text class="action-icon">💰</text>
-                <text class="action-text">增加账单</text>
-            </view>
-            <view class="action-item" bindtap="addMember">
-                <text class="action-icon">➕</text>
-                <text class="action-text">新增成员</text>
-            </view>
-            <view class="action-item" bindtap="endTrip">
-                <text class="action-icon">🏁</text>
-                <text class="action-text">结束旅行</text>
-            </view>
-        </view>
+  </view>
+  <!-- 功能入口 -->
+  <view class="card actions-section" wx:if="{{ trip.status === 'ongoing' }}">
+    <view class="action-grid">
+      <view class="action-item" bindtap="addBill">
+        <text class="action-icon">💰</text>
+        <text class="action-text">增加账单</text>
+      </view>
+      <view class="action-item" bindtap="addMember">
+        <text class="action-icon">➕</text>
+        <text class="action-text">新增成员</text>
+      </view>
+      <view class="action-item" bindtap="endTrip">
+        <text class="action-icon">🏁</text>
+        <text class="action-text">结束旅行</text>
+      </view>
     </view>
-
-    <!-- 成员列表 -->
-    <view class="card members-section">
-        <view class="section-header">
-            <text class="section-title">成员列表 {{activeMembers.length}}人</text>
-        </view>
-        <view class="members-list">
-            <view wx:for="{{activeMembers}}" wx:key="id" class="member-item">
-                <view class="member-avatar">
-                    <image wx:if="{{item.avatarUrl}}" src="{{item.avatarUrl}}" mode="aspectFill" />
-                    <view wx:else class="text-avatar">{{item.initials}}</view>
-                </view>
-                <view class="member-info">
-                    <text class="member-name">{{item.displayName}}</text>
-                    <text class="member-agent"
-                        wx:if="{{item.agentMemberId}}">代理：{{getMemberName(item.agentMemberId)}}</text>
-                </view>
-                <button class="btn-secondary" bindtap="setMemberAgent" data-member-id="{{item.id}}"
-                    wx:if="{{trip.status !== 'closed'}}">设代理</button>
-            </view>
-        </view>
+  </view>
+  <!-- 成员列表 -->
+  <view class="card members-section">
+    <view class="section-header">
+      <text class="section-title">成员列表 {{ activeMembers.length }}人</text>
     </view>
-
-    <!-- 最近账单 -->
-    <view class="card bills-section" wx:if="{{trip.status === 'ongoing'}}">
-        <view class="section-header">
-            <text class="section-title">最近账单</text>
+    <view class="members-list">
+      <view wx:for="{{ activeMembers }}" wx:key="id" class="member-item">
+        <view class="member-avatar">
+          <image wx:if="{{ item.avatarUrl }}" src="{{ item.avatarUrl }}" mode="aspectFill" />
+          <view wx:else class="text-avatar">{{ item.initials }}</view>
         </view>
-        <view class="bills-list">
-            <view wx:for="{{recentBills}}" wx:key="_id" class="bill-item" bindtap="editBill" data-bill="{{item}}">
-                <view class="bill-header">
-                    <text
-                        class="bill-category {{item.category}}">{{item.category === 'food' ? '餐饮' : item.category === 'transport' ? '交通' : item.category === 'lodging' ? '住宿' : item.category === 'ticket' ? '门票' : '其他'}}</text>
-                    <text class="bill-amount">{{item.amount}}</text>
-                </view>
-                <view class="bill-info">
-                    <text class="bill-payer">{{getMemberName(item.payerMemberId)}} 支付</text>
-                    <text class="bill-date">{{item.date}}</text>
-                </view>
-            </view>
-            <view class="empty-bills" wx:if="{{recentBills.length === 0}}">
-                <text>暂无账单记录</text>
-            </view>
+        <view class="member-info">
+          <text class="member-name">{{ item.displayName }}</text>
+          <text class="member-agent" wx:if="{{ item.agentMemberId }}"> 代理：{{ getMemberName(item.agentMemberId) }} </text>
         </view>
+        <button class="btn-secondary" bindtap="setMemberAgent" data-member-id="{{ item.id }}" wx:if="{{ trip.status !== 'closed' }}">设代理</button>
+      </view>
     </view>
+  </view>
+  <!-- 最近账单 -->
+  <view class="card bills-section" wx:if="{{ trip.status === 'ongoing' }}">
+    <view class="section-header">
+      <text class="section-title">最近账单</text>
+    </view>
+    <view class="bills-list">
+      <view wx:for="{{ recentBills }}" wx:key="_id" class="bill-item" bindtap="editBill" data-bill="{{ item }}">
+        <view class="bill-header">
+          <view class="bill-category {{ item.category }}"
+            >{{
+              item.category === 'food'
+                ? '餐饮'
+                : item.category === 'transport'
+                ? '交通'
+                : item.category === 'lodging'
+                ? '住宿'
+                : item.category === 'ticket'
+                ? '门票'
+                : '其他'
+            }}
+          </view>
+          <text class="bill-amount">{{ item.amount }}</text>
+        </view>
+        <view class="bill-info">
+          <text class="bill-payer">{{ getMemberName(item.payerMemberId) }} 支付</text>
+          <text class="bill-date">{{ item.date }}</text>
+        </view>
+      </view>
+      <view class="empty-bills" wx:if="{{ recentBills.length === 0 }}">
+        <text>暂无账单记录</text>
+      </view>
+    </view>
+  </view>
 </view>

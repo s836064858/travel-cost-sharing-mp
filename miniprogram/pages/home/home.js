@@ -19,7 +19,6 @@ Page({
     })
   },
 
-
   // 跳转到历史记录
   goToHistory() {
     wx.switchTab({

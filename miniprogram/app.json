@@ -1,40 +1,40 @@
 {
-    "pages": [
-        "pages/home/home",
-        "pages/profile/profile",
-        "pages/history/history",
-        "pages/trip-create/trip-create",
-        "pages/trip-detail/trip-detail",
-        "pages/bill-create/bill-create",
-        "pages/settlement-view/settlement-view"
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "旅行分摊",
-        "navigationBarTextStyle": "black"
-    },
-    "tabBar": {
-        "color": "#7A7E83",
-        "selectedColor": "#3cc51f",
-        "borderStyle": "black",
-        "backgroundColor": "#ffffff",
-        "list": [
-            {
-                "pagePath": "pages/home/home",
-                "iconPath": "images/home.png",
-                "selectedIconPath": "images/home.png",
-                "text": "首页"
-            },
-            {
-                "pagePath": "pages/history/history",
-                "iconPath": "images/history.png",
-                "selectedIconPath": "images/history.png",
-                "text": "历史记录"
-            }
-        ]
-    },
-    "style": "v2",
-    "sitemapLocation": "sitemap.json",
-    "lazyCodeLoading": "requiredComponents"
+  "pages": [
+    "pages/home/home",
+    "pages/profile/profile",
+    "pages/history/history",
+    "pages/trip-create/trip-create",
+    "pages/trip-detail/trip-detail",
+    "pages/bill-create/bill-create",
+    "pages/settlement-view/settlement-view"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "旅行分摊",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "iconPath": "images/history.png",
+        "selectedIconPath": "images/history.png",
+        "text": "历史记录"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
 }

@@ -1,11 +1,10 @@
-<!--pages/trip-create/trip-create.wxml-->
+<!-- pages/trip-create/trip-create.wxml -->
 <view class="page-container">
     <!-- 页面标题 -->
     <view class="hero">
         <view class="brand">旅行邀请</view>
         <view class="subtitle">邀请朋友加入，开始记账之旅</view>
     </view>
-
     <!-- 邀请二维码卡片（始终展示） -->
     <view class="card">
         <view class="card-header">
@@ -23,7 +22,6 @@
             </view>
         </view>
     </view>
-
     <!-- 成员列表卡片（始终展示） -->
     <view class="card">
         <view class="card-header">
@@ -44,10 +42,11 @@
                     <view class="member-status">{{item.isCreator ? '创建者' : '成员'}}</view>
                 </view>
                 <view class="member-actions">
-                    <button class="btn-remove" bindtap="removeMember" data-id="{{item.id}}">移除</button>
+                    <button class="btn-remove" bindtap="removeMember" data-id="{{item.id}}">
+                        移除
+                    </button>
                 </view>
             </view>
-
             <!-- 空状态 -->
             <view wx:if="{{memberCount <= 1}}" class="empty-state">
                 <view class="empty-icon">👥</view>
@@ -56,7 +55,6 @@
             </view>
         </view>
     </view>
-
     <!-- 账单名称（默认值） -->
     <view class="card">
         <view class="card-header">
@@ -66,12 +64,10 @@
             <input class="text-input" value="{{tripName}}" bindinput="onTripNameInput" placeholder="请输入账单名称" />
         </view>
     </view>
-
     <!-- 创建按钮（成员数达标即可） -->
     <view class="action-section">
         <button class="btn-primary" bindtap="createTrip" disabled="{{!canCreate}}">
             {{canCreate ? '创建旅行' : '至少需要2名成员'}}
         </button>
     </view>
-
 </view>

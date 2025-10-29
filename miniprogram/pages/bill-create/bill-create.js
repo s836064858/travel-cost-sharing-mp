@@ -1,4 +1,4 @@
-// pages/bill-create/bill-create.js
+const { getShortName } = require('../../utils/format')
 Page({
   data: {
     tripId: '',
@@ -64,7 +64,7 @@ Page({
         const enrichedMembers = activeMembers.map((m) => ({
           ...m,
           id: String(m.id),
-          shortName: this.getShortName(m.nickName || m.displayName || ''),
+          shortName: getShortName(m.nickName || m.displayName || ''),
           checked: true
         }))
 
@@ -240,20 +240,6 @@ Page({
     return this.data.formData.customAmounts[memberId] || ''
   },
 
-  // 获取成员名称
-  getMemberName(memberId) {
-    const member = this.data.members.find((m) => m.id === memberId)
-    return member ? member.nickName || member.displayName || '未知成员' : '未知成员'
-  },
-
-  // 生成文字头像（昵称后两个字）
-  getShortName(name) {
-    if (!name) return ''
-    const s = String(name).trim()
-    if (s.length <= 2) return s
-    return s.slice(-2)
-  },
-
   // 计算分摊预览
   calculatePreview() {
     const amount = parseFloat(this.data.formData.amount) || 0
@@ -281,7 +267,7 @@ Page({
           nickName: m.nickName,
           displayName: m.displayName,
           avatarUrl: m.avatarUrl,
-          shortName: this.getShortName(m.nickName || m.displayName)
+          shortName: getShortName(m.nickName || m.displayName)
         }
       })
     } else {
@@ -295,7 +281,7 @@ Page({
           nickName: m.nickName,
           displayName: m.displayName,
           avatarUrl: m.avatarUrl,
-          shortName: this.getShortName(m.nickName || m.displayName)
+          shortName: getShortName(m.nickName || m.displayName)
         }
       })
     }
@@ -303,12 +289,6 @@ Page({
     const diff = (amount - total).toFixed(2)
     this.setData({ previewDiff: diff, isZeroDiff: parseFloat(diff) === 0, sharePreview: shares })
     return shares
-  },
-
-  // 获取分摊预览
-  getSharePreview() {
-    // 保留方法，若逻辑层需主动获取预览，可直接返回当前缓存
-    return this.data.sharePreview
   },
 
   // 验证表单

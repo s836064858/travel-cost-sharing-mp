@@ -9,7 +9,7 @@
 
 /* 标题区域 - 与首页风格一致 */
 .hero {
-  background: linear-gradient(135deg, #6EE7B7 0%, #3B82F6 100%);
+  background: linear-gradient(135deg, #6ee7b7 0%, #3b82f6 100%);
   color: #fff;
   border-radius: 12rpx;
   padding: 40rpx 30rpx;
@@ -59,15 +59,6 @@
   text-align: center;
 }
 
-.qr-canvas {
-  width: 400rpx;
-  height: 400rpx;
-  border: 1rpx solid #f0f0f0;
-  border-radius: 12rpx;
-  margin: 0 auto 30rpx;
-  background: #fafafa;
-}
-
 .qr-image {
   width: 400rpx;
   height: 400rpx;
@@ -97,9 +88,6 @@
 }
 
 /* 加入模式样式复用卡片与空状态，仅补充布局 */
-.join-section {
-  padding: 40rpx;
-}
 
 /* 成员列表 */
 .members-list {
@@ -206,7 +194,7 @@
 
 .btn-primary {
   width: 100%;
-  background: linear-gradient(135deg, #6EE7B7 0%, #3B82F6 100%);
+  background: linear-gradient(135deg, #6ee7b7 0%, #3b82f6 100%);
   color: white;
   border: none;
   border-radius: 12rpx;

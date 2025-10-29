@@ -57,11 +57,6 @@ Page({
     this.stopPolling()
   },
 
-  onUnload() {
-    // 页面卸载时清理轮询
-    this.stopPolling()
-  },
-
   // 调用云函数生成临时旅行与二维码
   async createTempTripInvite() {
     try {
@@ -217,7 +212,7 @@ Page({
   // 移除成员
   removeMember(e) {
     const memberId = e.currentTarget.dataset.id
-    const target = this.data.members.find((m) => m.id === memberId)
+    const target = util.getMemberById(this.data.members, memberId)
     if (!target) return
     const data = target.source === 'openid' ? { openid: target.openid } : { name: target.name }
     wx.cloud

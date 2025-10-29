@@ -1,5 +1,4 @@
-// utils/util.js
-const formatTime = date => {
+const formatTime = (date) => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
@@ -10,7 +9,7 @@ const formatTime = date => {
   return `${[year, month, day].map(formatNumber).join('/')} ${[hour, minute, second].map(formatNumber).join(':')}`
 }
 
-const formatNumber = n => {
+const formatNumber = (n) => {
   n = n.toString()
   return n[1] ? n : `0${n}`
 }
@@ -18,40 +17,38 @@ const formatNumber = n => {
 // 格式化日期
 const formatDate = (dateStr, format = 'YYYY-MM-DD') => {
   if (!dateStr) return ''
-  
+
   const date = new Date(dateStr)
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
-  
-  return format
-    .replace('YYYY', year)
-    .replace('MM', month.toString().padStart(2, '0'))
-    .replace('DD', day.toString().padStart(2, '0'))
+
+  return format.replace('YYYY', year).replace('MM', month.toString().padStart(2, '0')).replace('DD', day.toString().padStart(2, '0'))
 }
 
 // 金额格式化
 const formatAmount = (amount, currency = 'CNY') => {
   if (amount === null || amount === undefined) return '0.00'
-  
+
   const num = parseFloat(amount)
   if (isNaN(num)) return '0.00'
-  
-  const symbol = {
-    'CNY': '¥',
-    'USD': '$',
-    'EUR': '€'
-  }[currency] || ''
-  
+
+  const symbol =
+    {
+      CNY: '¥',
+      USD: '$',
+      EUR: '€'
+    }[currency] || ''
+
   return `${symbol}${num.toFixed(2)}`
 }
 
 // 深拷贝
-const deepClone = obj => {
+const deepClone = (obj) => {
   if (obj === null || typeof obj !== 'object') return obj
   if (obj instanceof Date) return new Date(obj.getTime())
-  if (obj instanceof Array) return obj.map(item => deepClone(item))
-  
+  if (obj instanceof Array) return obj.map((item) => deepClone(item))
+
   const cloned = {}
   for (let key in obj) {
     if (obj.hasOwnProperty(key)) {
@@ -77,23 +74,23 @@ const debounce = (func, wait) => {
 // 节流函数
 const throttle = (func, limit) => {
   let inThrottle
-  return function(...args) {
+  return function (...args) {
     if (!inThrottle) {
       func.apply(this, args)
       inThrottle = true
-      setTimeout(() => inThrottle = false, limit)
+      setTimeout(() => (inThrottle = false), limit)
     }
   }
 }
 
 // 验证手机号
-const validatePhone = phone => {
+const validatePhone = (phone) => {
   const reg = /^1[3-9]\d{9}$/
   return reg.test(phone)
 }
 
 // 验证邮箱
-const validateEmail = email => {
+const validateEmail = (email) => {
   const reg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
   return reg.test(email)
 }
@@ -101,9 +98,9 @@ const validateEmail = email => {
 // 数组去重
 const uniqueArray = (arr, key) => {
   if (!key) return [...new Set(arr)]
-  
+
   const seen = new Set()
-  return arr.filter(item => {
+  return arr.filter((item) => {
     const value = item[key]
     if (seen.has(value)) {
       return false
@@ -115,11 +112,15 @@ const uniqueArray = (arr, key) => {
 
 // 获取随机颜色
 const getRandomColor = () => {
-  const colors = [
-    '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57',
-    '#FF9FF3', '#54A0FF', '#5F27CD', '#00D2D3', '#FF9F43'
-  ]
+  const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57', '#FF9FF3', '#54A0FF', '#5F27CD', '#00D2D3', '#FF9F43']
   return colors[Math.floor(Math.random() * colors.length)]
+}
+
+// 成员查找工具：根据 id 返回成员对象（未找到则返回空对象）
+const getMemberById = (members, memberId) => {
+  if (!Array.isArray(members)) return {}
+  const member = members.find((m) => m.id === memberId)
+  return member || {}
 }
 
 module.exports = {
@@ -132,5 +133,6 @@ module.exports = {
   validatePhone,
   validateEmail,
   uniqueArray,
-  getRandomColor
+  getRandomColor,
+  getMemberById
 }

@@ -35,66 +35,6 @@
   background-color: #999;
 }
 
-.trip-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 10rpx;
-  color: #666;
-  font-size: 28rpx;
-  margin-bottom: 20rpx;
-}
-
-/* 成员头像展示（精简） */
-.trip-avatars {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16rpx;
-  margin-bottom: 20rpx;
-}
-.trip-avatars .member-avatar {
-  width: 56rpx;
-  height: 56rpx;
-}
-
-.status-controls {
-  text-align: center;
-}
-
-.stats-section {
-  margin-bottom: 20rpx;
-}
-
-.stats-header {
-  margin-bottom: 30rpx;
-}
-
-.stats-title {
-  font-size: 32rpx;
-  font-weight: bold;
-}
-
-.stats-grid {
-  display: flex;
-  justify-content: space-around;
-}
-
-.stat-item {
-  text-align: center;
-}
-
-.stat-value {
-  display: block;
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #07c160;
-  margin-bottom: 10rpx;
-}
-
-.stat-label {
-  font-size: 24rpx;
-  color: #999;
-}
-
 .actions-section {
   margin-bottom: 20rpx;
 }
@@ -134,15 +74,6 @@
   font-weight: bold;
 }
 
-.btn-add {
-  background: none;
-  border: 1rpx solid #07c160;
-  color: #07c160;
-  border-radius: 6rpx;
-  padding: 8rpx 16rpx;
-  font-size: 24rpx;
-}
-
 .members-list {
   display: flex;
   flex-direction: column;
@@ -177,27 +108,8 @@
   color: #999;
 }
 
-.member-net {
-  font-size: 24rpx;
-  color: #666;
-}
-
-.btn-disable {
-  background-color: #ff4d4f;
-  color: white;
-  border: none;
-  border-radius: 6rpx;
-  padding: 12rpx 20rpx;
-  font-size: 24rpx;
-}
-
 .bills-section {
   margin-bottom: 20rpx;
-}
-
-.view-all {
-  color: #07c160;
-  font-size: 28rpx;
 }
 
 .bills-list {
@@ -267,6 +179,7 @@
   padding: 40rpx 0;
   color: #999;
 }
+
 .member-avatar {
   width: 64rpx;
   height: 64rpx;

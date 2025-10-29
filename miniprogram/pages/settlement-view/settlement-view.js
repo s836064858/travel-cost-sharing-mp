@@ -1,4 +1,5 @@
-// pages/settlement-view/settlement-view.js
+const { getShortName } = require('../../utils/format')
+const { getMemberById } = require('../../utils/util')
 Page({
   data: {
     tripId: '',
@@ -49,12 +50,14 @@ Page({
             _id: `${s.fromMemberId}-${s.toMemberId}-${idx}`,
             fromMemberId: s.fromMemberId,
             toMemberId: s.toMemberId,
-            fromName: this.getMember(s.fromMemberId).nickName || this.getMember(s.fromMemberId).displayName || '未知成员',
-            toName: this.getMember(s.toMemberId).nickName || this.getMember(s.toMemberId).displayName || '未知成员',
-            fromAvatarUrl: this.getMember(s.fromMemberId).avatarUrl || '',
-            toAvatarUrl: this.getMember(s.toMemberId).avatarUrl || '',
-            fromShortName: this.getShortName(this.getMember(s.fromMemberId).nickName || this.getMember(s.fromMemberId).displayName),
-            toShortName: this.getShortName(this.getMember(s.toMemberId).nickName || this.getMember(s.toMemberId).displayName),
+            fromName: getMemberById(this.data.members, s.fromMemberId).nickName || getMemberById(this.data.members, s.fromMemberId).displayName || '未知成员',
+            toName: getMemberById(this.data.members, s.toMemberId).nickName || getMemberById(this.data.members, s.toMemberId).displayName || '未知成员',
+            fromAvatarUrl: getMemberById(this.data.members, s.fromMemberId).avatarUrl || '',
+            toAvatarUrl: getMemberById(this.data.members, s.toMemberId).avatarUrl || '',
+            fromShortName: getShortName(
+              getMemberById(this.data.members, s.fromMemberId).nickName || getMemberById(this.data.members, s.fromMemberId).displayName
+            ),
+            toShortName: getShortName(getMemberById(this.data.members, s.toMemberId).nickName || getMemberById(this.data.members, s.toMemberId).displayName),
             amount: s.amount,
             status: 'final'
           }))
@@ -97,12 +100,12 @@ Page({
         _id: `${s.fromMemberId}-${s.toMemberId}-${idx}`,
         fromMemberId: s.fromMemberId,
         toMemberId: s.toMemberId,
-        fromName: this.getMember(s.fromMemberId).nickName || this.getMember(s.fromMemberId).displayName || '未知成员',
-        toName: this.getMember(s.toMemberId).nickName || this.getMember(s.toMemberId).displayName || '未知成员',
-        fromAvatarUrl: this.getMember(s.fromMemberId).avatarUrl || '',
-        toAvatarUrl: this.getMember(s.toMemberId).avatarUrl || '',
-        fromShortName: this.getShortName(this.getMember(s.fromMemberId).nickName || this.getMember(s.fromMemberId).displayName),
-        toShortName: this.getShortName(this.getMember(s.toMemberId).nickName || this.getMember(s.toMemberId).displayName),
+        fromName: getMemberById(this.data.members, s.fromMemberId).nickName || getMemberById(this.data.members, s.fromMemberId).displayName || '未知成员',
+        toName: getMemberById(this.data.members, s.toMemberId).nickName || getMemberById(this.data.members, s.toMemberId).displayName || '未知成员',
+        fromAvatarUrl: getMemberById(this.data.members, s.fromMemberId).avatarUrl || '',
+        toAvatarUrl: getMemberById(this.data.members, s.toMemberId).avatarUrl || '',
+        fromShortName: getShortName(getMemberById(this.data.members, s.fromMemberId).nickName || getMemberById(this.data.members, s.fromMemberId).displayName),
+        toShortName: getShortName(getMemberById(this.data.members, s.toMemberId).nickName || getMemberById(this.data.members, s.toMemberId).displayName),
         amount: s.amount,
         status: 'suggested'
       }))
@@ -111,19 +114,6 @@ Page({
     } catch (error) {
       console.error('加载结算建议失败:', error)
     }
-  },
-  // 获取成员名称
-  getMember(memberId) {
-    const member = this.data.members.find((m) => m.id === memberId)
-    return member || {}
-  },
-
-  // 生成文字头像（昵称后两个字）
-  getShortName(name) {
-    if (!name) return '成员'
-    const s = String(name).trim()
-    if (s.length <= 2) return s
-    return s.slice(-2)
   },
 
   // 确认结算：保存到云端数据集并（可选）关闭行程

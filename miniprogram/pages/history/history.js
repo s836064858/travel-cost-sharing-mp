@@ -30,7 +30,7 @@ Page({
   async loadTrips() {
     try {
       wx.showLoading({ title: '加载中...' })
-      
+
       // 调用云函数获取旅行列表
       const result = await wx.cloud.callFunction({
         name: 'listTrips',
@@ -40,11 +40,11 @@ Page({
       })
 
       if (result.result.success) {
-        const trips = (result.result.data || []).map(t => ({
+        const trips = (result.result.data || []).map((t) => ({
           ...t,
-          members: (t.members || []).map(m => ({
+          members: (t.members || []).map((m) => ({
             ...m,
-            displayName: (m.nickName || m.name || '未设置昵称'),
+            displayName: m.nickName || m.name || '未设置昵称',
             initials: (m.nickName || m.name || '未设置昵称').slice(-2)
           }))
         }))

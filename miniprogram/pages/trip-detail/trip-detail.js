@@ -1,5 +1,6 @@
 // pages/trip-detail/trip-detail.js
 const app = getApp()
+const { getMemberById } = require('../../utils/util')
 
 Page({
   data: {
@@ -89,8 +90,8 @@ Page({
 
   // 获取成员名称
   getMemberName(memberId) {
-    const member = this.data.activeMembers.find((m) => m.id === memberId)
-    return member ? member.displayName : '未知成员'
+    const member = getMemberById(this.data.activeMembers, memberId)
+    return member.displayName || '未知成员'
   },
 
   // 结束旅行
@@ -116,11 +117,7 @@ Page({
   },
 
   // 查看结算
-  viewSettlement() {
-    wx.redirectTo({
-      url: '/pages/settlement-view/settlement-view?tripId=' + this.data.tripId
-    })
-  },
+  // （已移除）viewSettlement 未在 WXML 绑定中使用
 
   // 设置代理人
   setMemberAgent(e) {
