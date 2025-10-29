@@ -64,7 +64,7 @@ Page({
         const enrichedMembers = activeMembers.map((m) => ({
           ...m,
           id: String(m.id),
-          shortName: getShortName(m.nickName || m.displayName || ''),
+          shortName: getShortName(m.name || ''),
           checked: true
         }))
 
@@ -108,12 +108,12 @@ Page({
       const categoryIndex = this.data.categoryOptions.findIndex((c) => this.data.categoryMap[c] === bill.category)
 
       const customAmounts = {}
-      ;(bill.shares || []).forEach((s) => {
+      bill.shares.forEach((s) => {
         const key = String(s.memberId)
         customAmounts[key] = s.shareAmount
       })
 
-      const selectedParticipants = (bill.shares || []).map((s) => String(s.memberId))
+      const selectedParticipants = bill.shares.map((s) => String(s.memberId))
       const updatedMembers = this.data.members.map((m) => ({
         ...m,
         checked: selectedParticipants.includes(m.id)
@@ -134,9 +134,6 @@ Page({
         },
         members: updatedMembers
       })
-
-      this.validateForm()
-      this.calculatePreview()
     } catch (error) {
       console.error('加载账单详情失败:', error)
     }
@@ -264,10 +261,9 @@ Page({
         return {
           memberId,
           amount: mAmount.toFixed(2),
-          nickName: m.nickName,
-          displayName: m.displayName,
+          name: m.name,
           avatarUrl: m.avatarUrl,
-          shortName: getShortName(m.nickName || m.displayName)
+          shortName: getShortName(m.name)
         }
       })
     } else {
@@ -278,10 +274,9 @@ Page({
         return {
           memberId,
           amount: mAmount.toFixed(2),
-          nickName: m.nickName,
-          displayName: m.displayName,
+          name: m.name,
           avatarUrl: m.avatarUrl,
-          shortName: getShortName(m.nickName || m.displayName)
+          shortName: getShortName(m.name)
         }
       })
     }
@@ -354,7 +349,7 @@ Page({
         // 返回旅行详情页
         setTimeout(() => {
           wx.navigateBack()
-        }, 1500)
+        }, 1000)
       } else {
         wx.showToast({
           title: result.result.message || '创建失败',

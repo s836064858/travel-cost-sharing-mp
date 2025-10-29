@@ -10,7 +10,7 @@
         <!-- 付款人选择 -->
         <view class="form-group">
           <label class="form-label">付款人</label>
-          <picker mode="selector" range="{{ members }}" range-key="nickName" value="{{ payerIndex }}" bindchange="onPayerChange">
+          <picker mode="selector" range="{{ members }}" range-key="name" value="{{ payerIndex }}" bindchange="onPayerChange">
             <view class="picker-field picker-with-avatar">
               <block wx:if="{{ members[payerIndex] }}">
                 <view class="member-avatar">
@@ -19,7 +19,7 @@
                     {{ members[payerIndex].shortName || '成员' }}
                   </view>
                 </view>
-                <text class="member-name">{{ members[payerIndex].nickName }}</text>
+                <text class="member-name">{{ members[payerIndex].name }}</text>
               </block>
               <block wx:else>请选择付款人</block>
             </view>
@@ -78,7 +78,7 @@
                     </view>
                   </view>
                   <view class="member-name">
-                    {{ item.nickName || item.displayName || '成员' }}
+                    {{ item.name || '成员' }}
                   </view>
                   <view class="share-amount" wx:if="{{ formData.splitMethod === 'equal' && item.checked }}">
                     {{ getShareAmount(item.id) }}
@@ -109,7 +109,7 @@
                 <view wx:else class="text-avatar">{{ item.shortName || '成员' }}</view>
               </view>
               <view class="member-name">
-                {{ item.nickName || item.displayName || '成员' }}
+                {{ item.name || '成员' }}
               </view>
             </view>
             <text class="preview-amount">{{ item.amount }}</text>

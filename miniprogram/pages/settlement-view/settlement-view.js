@@ -50,14 +50,12 @@ Page({
             _id: `${s.fromMemberId}-${s.toMemberId}-${idx}`,
             fromMemberId: s.fromMemberId,
             toMemberId: s.toMemberId,
-            fromName: getMemberById(this.data.members, s.fromMemberId).nickName || getMemberById(this.data.members, s.fromMemberId).displayName || '未知成员',
-            toName: getMemberById(this.data.members, s.toMemberId).nickName || getMemberById(this.data.members, s.toMemberId).displayName || '未知成员',
+            fromName: getMemberById(this.data.members, s.fromMemberId).name || '未知成员',
+            toName: getMemberById(this.data.members, s.toMemberId).name || '未知成员',
             fromAvatarUrl: getMemberById(this.data.members, s.fromMemberId).avatarUrl || '',
             toAvatarUrl: getMemberById(this.data.members, s.toMemberId).avatarUrl || '',
-            fromShortName: getShortName(
-              getMemberById(this.data.members, s.fromMemberId).nickName || getMemberById(this.data.members, s.fromMemberId).displayName
-            ),
-            toShortName: getShortName(getMemberById(this.data.members, s.toMemberId).nickName || getMemberById(this.data.members, s.toMemberId).displayName),
+            fromShortName: getShortName(getMemberById(this.data.members, s.fromMemberId).name || ''),
+            toShortName: getShortName(getMemberById(this.data.members, s.toMemberId).name || ''),
             amount: s.amount,
             status: 'final'
           }))
@@ -100,12 +98,12 @@ Page({
         _id: `${s.fromMemberId}-${s.toMemberId}-${idx}`,
         fromMemberId: s.fromMemberId,
         toMemberId: s.toMemberId,
-        fromName: getMemberById(this.data.members, s.fromMemberId).nickName || getMemberById(this.data.members, s.fromMemberId).displayName || '未知成员',
-        toName: getMemberById(this.data.members, s.toMemberId).nickName || getMemberById(this.data.members, s.toMemberId).displayName || '未知成员',
+        fromName: getMemberById(this.data.members, s.fromMemberId).name || '未知成员',
+        toName: getMemberById(this.data.members, s.toMemberId).name || '未知成员',
         fromAvatarUrl: getMemberById(this.data.members, s.fromMemberId).avatarUrl || '',
         toAvatarUrl: getMemberById(this.data.members, s.toMemberId).avatarUrl || '',
-        fromShortName: getShortName(getMemberById(this.data.members, s.fromMemberId).nickName || getMemberById(this.data.members, s.fromMemberId).displayName),
-        toShortName: getShortName(getMemberById(this.data.members, s.toMemberId).nickName || getMemberById(this.data.members, s.toMemberId).displayName),
+        fromShortName: getShortName(getMemberById(this.data.members, s.fromMemberId).name || ''),
+        toShortName: getShortName(getMemberById(this.data.members, s.toMemberId).name || ''),
         amount: s.amount,
         status: 'suggested'
       }))
