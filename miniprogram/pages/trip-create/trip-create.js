@@ -26,7 +26,7 @@ Page({
     this.setData({ tripName: `${today} 旅行账单` })
     if (tripId) {
       this.setData({ tripId })
-      this.ensureProfileReadyAndJoin()
+      this.joinTrip()
       this.startPolling()
     } else {
       this.createTempTripInvite()
@@ -35,7 +35,7 @@ Page({
 
   onShow() {
     if (this.data.tripId && !this.data.joined) {
-      this.ensureProfileReadyAndJoin()
+      this.joinTrip()
     }
     // 页面显示时确保轮询运行
     this.startPolling()
@@ -104,16 +104,12 @@ Page({
 
       // 映射成员列表用于页面展示
       const uiMembers = members.map((m) => {
-        const displayName = m.nickName || '未设置昵称'
-        const initials = displayName.slice(-2)
+        const initials = m.name.slice(-2)
         const id = m.openid ? m.openid : `name:${m.name}`
-        const source = m.openid ? 'openid' : 'name'
         return {
           id,
-          source,
           openid: m.openid,
           name: m.name,
-          displayName,
           initials,
           avatarUrl: m.avatarUrl || '',
           isCreator: !!m.isCreator
@@ -132,12 +128,6 @@ Page({
     } finally {
       this.setData({ isFetching: false })
     }
-  },
-
-  // 进入加入模式时，确保用户资料完整后尝试加入
-  ensureProfileReadyAndJoin() {
-    // 直接尝试加入，由云函数判断资料是否完善
-    this.joinTrip()
   },
 
   async joinTrip() {
@@ -163,7 +153,7 @@ Page({
             title: '完善信息提示',
             content: '加入前请先完善头像和昵称。',
             confirmText: '去完善',
-            cancelText: '稍后',
+            showCancel: false,
             success: (modalRes) => {
               if (modalRes.confirm) {
                 wx.navigateTo({ url: '/pages/profile/profile' })
@@ -199,7 +189,7 @@ Page({
 
   // 分享二维码
   shareQRCode() {
-    wx.showShareMenu({ withShareTicket: true })
+    wx.showShareMenu({ withShareTicket: true, menus: ['shareAppMessage'] })
   },
 
   onShareAppMessage() {
@@ -214,7 +204,7 @@ Page({
     const memberId = e.currentTarget.dataset.id
     const target = util.getMemberById(this.data.members, memberId)
     if (!target) return
-    const data = target.source === 'openid' ? { openid: target.openid } : { name: target.name }
+    const data = target.openid ? { openid: target.openid } : { name: target.name }
     wx.cloud
       .callFunction({
         name: 'removeTempMember',

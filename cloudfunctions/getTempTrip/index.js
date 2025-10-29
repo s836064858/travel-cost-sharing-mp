@@ -17,7 +17,7 @@ exports.main = async (event, context) => {
     if (!doc) return { success: false, message: '临时旅行不存在' }
 
     const members = Array.isArray(doc.members) ? doc.members : []
-    const openIds = members.map(m => m.openid).filter(Boolean)
+    const openIds = members.map((m) => m.openid).filter(Boolean)
 
     let userMap = {}
     if (openIds.length > 0) {
@@ -29,15 +29,14 @@ exports.main = async (event, context) => {
       }, {})
     }
 
-    const membersDetailed = members.map(m => {
+    const membersDetailed = members.map((m) => {
       const hasOpen = !!m.openid
-      const profile = hasOpen ? (userMap[m.openid] || {}) : {}
+      const profile = hasOpen ? userMap[m.openid] || {} : {}
       return {
         openid: m.openid || '',
-        name: m.name || '',
+        name: m.name || profile.nickName || '',
         isCreator: !!m.isCreator,
-        nickName: hasOpen ? (profile.nickName || '') : (m.name || ''),
-        avatarUrl: hasOpen ? (profile.avatarUrl || '') : ''
+        avatarUrl: hasOpen ? profile.avatarUrl || '' : ''
       }
     })
 
