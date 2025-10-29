@@ -34,11 +34,12 @@ Page({
   },
 
   onShow() {
+    // 页面显示时确保轮询运行
+    this.startPolling()
+    // 页面显示时检查是否需要加入行程（joinTrip 内部已有防重复调用机制）
     if (this.data.tripId && !this.data.joined) {
       this.joinTrip()
     }
-    // 页面显示时确保轮询运行
-    this.startPolling()
   },
 
   onUnload() {
@@ -131,6 +132,10 @@ Page({
   },
 
   async joinTrip() {
+    // 防止重复调用
+    if (this.data.isFetching) return
+    this.setData({ isFetching: true })
+    
     try {
       const res = await wx.cloud.callFunction({
         name: 'joinTempTrip',
@@ -166,6 +171,8 @@ Page({
       }
     } catch (e) {
       wx.showToast({ title: '加入失败，请稍后重试', icon: 'none' })
+    } finally {
+      this.setData({ isFetching: false })
     }
   },
 
