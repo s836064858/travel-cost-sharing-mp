@@ -17,9 +17,9 @@
         <view class="empty-icon">🔗</view>
         <view class="empty-text">二维码生成中...</view>
       </view>
-      <view class="qr-actions">
+      <!-- <view class="qr-actions">
         <button class="btn-secondary" bindtap="shareQRCode">分享</button>
-      </view>
+      </view> -->
     </view>
   </view>
   <!-- 成员列表卡片（始终展示） -->
