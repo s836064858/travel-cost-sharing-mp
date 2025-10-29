@@ -39,17 +39,15 @@ exports.main = async (event, context) => {
         normalizedMembers.push({
           id: m.openid,
           openid: m.openid,
-          nickName: m.displayName || userDoc.nickName || '',
-          avatarUrl: m.avatarUrl || userDoc.avatarUrl || '',
+          name: userDoc.nickName || '',
           role: m.isCreator ? 'creator' : 'member',
           active: true
         })
       } else if (m.name) {
         normalizedMembers.push({
           id: `name:${m.name}`,
+          openid: null,
           name: m.name,
-          nickName: m.displayName || m.name,
-          avatarUrl: m.avatarUrl || '',
           role: m.isCreator ? 'creator' : 'member',
           active: true
         })
@@ -76,7 +74,6 @@ exports.main = async (event, context) => {
       members: normalizedMembers,
       creatorOpenid: finalCreatorOpenid || '',
       ownerOpenid: finalCreatorOpenid || '',
-      qrcodeFileID: tmpDoc.qrcodeFileID || '',
       createdAt: db.serverDate(),
       updatedAt: db.serverDate(),
       status: 'ongoing'
@@ -84,13 +81,15 @@ exports.main = async (event, context) => {
 
     const addRes = await trips.add({ data: newTrip })
 
-    // 标记临时旅行已转换（可选：不删除临时旅行，便于回溯）
-    await tmpTrips.doc(tmpDoc._id).update({
-      data: {
-        status: 'converted',
-        updatedAt: db.serverDate()
+    // 创建成功后清理临时旅行与对应二维码文件
+    try {
+      if (tmpDoc.qrcodeFileID) {
+        await cloud.deleteFile({ fileList: [tmpDoc.qrcodeFileID] })
       }
-    })
+      await tmpTrips.doc(tmpDoc._id).remove()
+    } catch (e) {
+      // 删除临时记录失败不影响创建结果
+    }
 
     return { success: true, id: addRes._id }
   } catch (err) {

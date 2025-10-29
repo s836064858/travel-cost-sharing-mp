@@ -35,7 +35,8 @@ Page({
       const result = await wx.cloud.callFunction({
         name: 'listTrips',
         data: {
-          status: this.data.activeTab === 'ongoing' ? 'ongoing' : 'closed'
+          status: this.data.activeTab === 'ongoing' ? 'ongoing' : 'closed',
+          pageSize: 9999
         }
       })
 
@@ -44,8 +45,7 @@ Page({
           ...t,
           members: (t.members || []).map((m) => ({
             ...m,
-            displayName: m.nickName || m.name || '未设置昵称',
-            initials: (m.nickName || m.name || '未设置昵称').slice(-2)
+            initials: m.name.slice(-2)
           }))
         }))
         console.log(trips)

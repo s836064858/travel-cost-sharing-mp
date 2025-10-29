@@ -39,15 +39,11 @@ Page({
           .filter((member) => member.active)
           .map((m) => ({
             ...m,
-            displayName: m.nickName || m.name || '未设置昵称',
-            initials: (m.nickName || m.name || '未设置昵称').slice(-2)
+            initials: m.name.slice(-2)
           }))
         this.setData({ activeMembers })
 
-        // 加载统计信息和最近账单
-        if (trip.status !== 'created') {
-          await this.loadRecentBills()
-        }
+        await this.loadRecentBills()
 
         // 设置当前旅行
         app.globalData.currentTrip = trip
@@ -91,7 +87,7 @@ Page({
   // 获取成员名称
   getMemberName(memberId) {
     const member = getMemberById(this.data.activeMembers, memberId)
-    return member.displayName || '未知成员'
+    return member.name || '未知成员'
   },
 
   // 结束旅行
@@ -116,9 +112,6 @@ Page({
     })
   },
 
-  // 查看结算
-  // （已移除）viewSettlement 未在 WXML 绑定中使用
-
   // 设置代理人
   setMemberAgent(e) {
     const memberId = e.currentTarget.dataset.memberId
@@ -127,7 +120,7 @@ Page({
       wx.showToast({ title: '无可选代理人', icon: 'none' })
       return
     }
-    const names = candidates.map((m) => m.displayName || '成员')
+    const names = candidates.map((m) => m.name || '成员')
     wx.showActionSheet({
       itemList: names,
       success: (res) => {
@@ -166,11 +159,11 @@ Page({
         if (res.confirm && res.content.trim()) {
           try {
             const result = await wx.cloud.callFunction({
-              name: 'addMember',
+              name: 'addTripMember',
               data: {
                 tripId: this.data.tripId,
                 member: {
-                  displayName: res.content.trim()
+                  name: res.content.trim()
                 }
               }
             })

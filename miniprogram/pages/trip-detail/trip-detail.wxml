@@ -36,7 +36,7 @@
           <view wx:else class="text-avatar">{{ item.initials }}</view>
         </view>
         <view class="member-info">
-          <text class="member-name">{{ item.displayName }}</text>
+          <text class="member-name">{{ item.name }}</text>
           <text class="member-agent" wx:if="{{ item.agentMemberId }}"> 代理：{{ getMemberName(item.agentMemberId) }} </text>
         </view>
         <button class="btn-secondary" bindtap="setMemberAgent" data-member-id="{{ item.id }}" wx:if="{{ trip.status !== 'closed' }}">设代理</button>

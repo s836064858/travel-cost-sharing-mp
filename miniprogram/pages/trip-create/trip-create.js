@@ -204,6 +204,11 @@ Page({
     const memberId = e.currentTarget.dataset.id
     const target = util.getMemberById(this.data.members, memberId)
     if (!target) return
+    // 逻辑层保护：创建者不可移除
+    if (target.isCreator) {
+      wx.showToast({ title: '创建者不可移除', icon: 'none' })
+      return
+    }
     const data = target.openid ? { openid: target.openid } : { name: target.name }
     wx.cloud
       .callFunction({

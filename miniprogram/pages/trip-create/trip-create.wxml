@@ -41,7 +41,7 @@
           <view class="member-name">{{ item.name }}</view>
           <view class="member-status">{{ item.isCreator ? '创建者' : '成员' }}</view>
         </view>
-        <view class="member-actions">
+        <view class="member-actions" wx:if="{{ !item.isCreator }}">
           <button class="btn-remove" bindtap="removeMember" data-id="{{ item.id }}">移除</button>
         </view>
       </view>
