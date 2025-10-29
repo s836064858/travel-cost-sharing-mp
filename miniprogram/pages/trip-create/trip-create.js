@@ -20,7 +20,12 @@ Page({
   },
 
   onLoad(options) {
-    const tripId = (options && options.tripId) || ''
+    let tripId = null
+    if (options && options.tripId) {
+      tripId = options.tripId
+    } else if (options && options.scene) {
+      tripId = decodeURIComponent(options.scene).split('=')[1]
+    }
     // 初始化默认账单名称：YYYY-MM-DD 旅行账单
     const today = util.formatDate(new Date(), 'YYYY-MM-DD')
     this.setData({ tripName: `${today} 旅行账单` })
@@ -97,7 +102,7 @@ Page({
       if (!success) return
 
       // 设置二维码展示
-      if (trip && trip.qrcodeFileID) {
+      if (trip && trip.qrcodeFileID && trip.qrcodeFileID !== this.data.qrcodeFileID) {
         const urlRes = await wx.cloud.getTempFileURL({ fileList: [trip.qrcodeFileID] })
         const fileObj = (urlRes && urlRes.fileList && urlRes.fileList[0]) || {}
         this.setData({ qrcodeFileID: trip.qrcodeFileID, qrcodeUrl: fileObj.tempFileURL || '' })
@@ -135,7 +140,7 @@ Page({
     // 防止重复调用
     if (this.data.isFetching) return
     this.setData({ isFetching: true })
-    
+
     try {
       const res = await wx.cloud.callFunction({
         name: 'joinTempTrip',
