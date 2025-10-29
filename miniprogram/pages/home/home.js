@@ -11,6 +11,14 @@ Page({
     this.setData({
       userInfo: app.globalData.userInfo || null
     })
+    wx.showShareMenu({ withShareTicket: true, menus: ['shareAppMessage'] })
+  },
+
+  onShareAppMessage() {
+    return {
+      title: '邀请你使用旅行记账',
+      path: `/pages/home/home`
+    }
   },
 
   onShow() {
