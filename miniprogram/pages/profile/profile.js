@@ -26,7 +26,7 @@ Page({
   },
   async onSave() {
     const { avatarUrl, nickName } = this.data
-    let avatarPreviewUrl = null
+    let avatarPreviewUrl = []
     let avatarFileID = this.data.avatarFileID || ''
 
     try {
@@ -45,7 +45,7 @@ Page({
         avatarPreviewUrl = await wx.cloud.getTempFileURL({ fileList: [uploadRes.fileID] })
       }
 
-      const userInfo = { avatarUrl: avatarFileID, nickName, avatarPreviewUrl: avatarPreviewUrl[0]?.tempFileURL || '' }
+      const userInfo = { avatarUrl: avatarFileID, nickName, avatarPreviewUrl: avatarPreviewUrl[0]?.tempFileURL || this.data.avatarPreviewUrl || '' }
       console.log('userInfo', userInfo)
 
       // 保存到云（写入 users 集合）
@@ -65,6 +65,7 @@ Page({
         wx.showToast({ title: msg, icon: 'none' })
       }
     } catch (err) {
+      console.error('保存用户资料失败:', err)
       wx.showToast({ title: '保存失败，请稍后重试', icon: 'none' })
     } finally {
       wx.hideLoading()

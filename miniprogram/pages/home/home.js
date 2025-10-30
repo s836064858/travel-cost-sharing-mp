@@ -21,7 +21,7 @@ Page({
     }
   },
 
-  onShow() {
+  onRouteDone() {
     this.setData({
       userInfo: app.globalData.userInfo || null
     })
