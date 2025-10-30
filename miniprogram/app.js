@@ -25,7 +25,7 @@ App({
             if (Array.isArray(pages) && pages.length) {
               pages.forEach((p) => {
                 if (p && p.route === 'pages/home/home') {
-                  p.setData({ userInfo: enriched })
+                  p.setData({ userInfo: enriched, avatarPreviewUrl: previewUrl })
                 }
               })
             }

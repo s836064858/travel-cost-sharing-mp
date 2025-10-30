@@ -4,12 +4,14 @@ const app = getApp()
 Page({
   data: {
     userInfo: null,
+    avatarPreviewUrl: '',
     defaultAvatar: '../../images/avatar.png'
   },
 
   onLoad() {
     this.setData({
-      userInfo: app.globalData.userInfo || null
+      userInfo: app.globalData.userInfo || null,
+      avatarPreviewUrl: app.globalData.userInfo?.avatarPreviewUrl || ''
     })
     wx.showShareMenu({ withShareTicket: true, menus: ['shareAppMessage'] })
   },
@@ -23,7 +25,8 @@ Page({
 
   onRouteDone() {
     this.setData({
-      userInfo: app.globalData.userInfo || null
+      userInfo: app.globalData.userInfo || null,
+      avatarPreviewUrl: app.globalData.userInfo?.avatarPreviewUrl || ''
     })
   },
 
