@@ -34,10 +34,10 @@
   <!-- 使用须知 -->
   <view class="card">
     <view class="section-title">使用须知</view>
-    <view class="tip-text">· 个人资料：设置头像与昵称，完善后可加入旅行</view>
-    <view class="tip-text">· 创建旅行：生成二维码邀请成员，满2人可创建账单</view>
-    <view class="tip-text">· 旅行详情：添加账单、分摊与结算，支持邀请/移除成员</view>
-    <view class="tip-text">· 历史记录：查看已创建旅行，按状态筛选与跳转详情</view>
-    <view class="tip-text">· 结算视图：查看每人应付/应收，一键标记结清</view>
+    <view class="tip-text">· 个人资料：设置头像与昵称，头像将保存为云文件ID并在前端解析为临时链接</view>
+    <view class="tip-text">· 创建旅行：生成二维码邀请成员（满2人可创建账单），支持移除成员</view>
+    <view class="tip-text">· 账单记录：选择付款人与参与者，支持均分与自定义分摊</view>
+    <view class="tip-text">· 代理关系：成员可设置代理人，结算建议会按代理聚合计算</view>
+    <view class="tip-text">· 结算视图：查看建议或最终结算，确认后可关闭行程</view>
   </view>
 </view>

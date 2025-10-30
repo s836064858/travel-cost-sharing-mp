@@ -13,6 +13,13 @@
 - 前端：微信小程序（WXML/WXSS/JS）
 - 云端：CloudBase 云函数（Node.js，`wx-server-sdk`）
 
+## 头像处理与缓存
+- 存储：`users.avatarUrl` 保存云文件 `fileID`（永久引用），不再直接保存临时链接。
+- 展示：前端统一使用工具函数将 `fileID` 解析为临时可访问链接：
+  - `resolveAvatarUrl(fileIdOrUrl)`：将 `cloud://...` 文件 ID 解析为 `http` 临时链接；`http` 与本地路径直返。
+  - `resolveMembersAvatars(members)`：批量解析成员头像并覆盖 `avatarUrl`，带内存级会话缓存。
+- 缓存：同一 `fileID` 在一次会话内只解析一次，减少网络请求与闪烁。
+
 ## 目录结构
 - `miniprogram/`：小程序源码（页面、样式、全局配置）
 - `cloudfunctions/`：云函数源码（账单、行程、结算、用户等）
@@ -29,6 +36,7 @@
 - 运行与调试：
   - 在工具中直接点击预览或真机调试
   - 云函数会随代码一并上传与执行
+ - 资料完善：在“个人资料”选择头像（本地文件会自动上传到云存储，保存为 `fileID`）并设置昵称；完善后可创建/加入旅行。
 
 ## 关键流程
 - 账单字段：
@@ -39,6 +47,9 @@
 - 结算计算：
   - 云函数 `computeSettlement` 从 `trips.members` 读取代理关系（`agentMemberId`），按代理聚合后进行匹配生成结算建议
   - 前端 `settlement-view` 展示建议与最终结算，支持确认并保存
+ - 头像解析：
+   - `app.js` 拉取用户信息后，使用 `resolveAvatarUrl(user.avatarUrl)` 设置 `globalData.userInfo.avatarPreviewUrl`，用于首页展示。
+   - 各页面在映射成员列表时通过工具函数解析头像，确保显示稳定。
 
 ## 重要页面
 - `pages/history/`：
@@ -59,10 +70,15 @@
 - ID 字段使用字符串（如 openid 或 `name:name`）
 - 前端展示优先使用 `nickName`，其次 `displayName`；头像使用 `avatarUrl`
 - 修改云函数逻辑时保持与前端字段契合，避免不一致的字段名
+ - 前端展示头像时请使用解析后的链接（通过工具函数），不要直接写死临时 URL。
 
 ## 常见问题
 - 结算为空：检查账单是否完整、成员是否激活、代理关系是否设置合理（同一代理下的互相债务会被聚合抵消）
-- 头像不显示：确保 `users` 集合中的 `avatarUrl` 已保存，或使用文字头像兜底
+- 头像不显示：确保 `users.avatarUrl` 保存为云文件 `fileID`；前端使用 `resolveAvatarUrl` 解析显示，或使用文字头像兜底。
+
+## 最近改动摘要
+- 修复“创建行程”页面重复触发获取逻辑，加入 `isFetching` 状态在 `finally` 中复位，避免界面卡在 loading。
+- 统一头像展示：前端引入头像解析与内存缓存工具函数，并在历史列表、行程详情、账单创建、结算视图等页面应用。
 
 ---
 如需补充部署文档、数据库初始化脚本或更详细的计算示例，请提 Issue 或告诉我添加。
