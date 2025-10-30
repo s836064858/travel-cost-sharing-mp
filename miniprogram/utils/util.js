@@ -124,6 +124,42 @@ const getMemberById = (members, memberId) => {
   return member || {}
 }
 
+// 头像解析缓存（内存级，页面会话内有效）
+const __avatarCache = {}
+
+// 判断是否为云文件ID
+const isCloudFileId = (val) => typeof val === 'string' && val.indexOf('cloud://') === 0
+
+// 解析头像：文件ID -> 临时可用链接；带内存缓存
+const resolveAvatarUrl = async (avatarIdOrUrl) => {
+  if (!avatarIdOrUrl) return ''
+  const str = String(avatarIdOrUrl)
+  if (str.indexOf('http') === 0) return str
+  if (!isCloudFileId(str)) return str
+  if (__avatarCache[str]) return __avatarCache[str]
+  try {
+    const res = await wx.cloud.getTempFileURL({ fileList: [str] })
+    const item = res && res.fileList && res.fileList[0]
+    const url = (item && item.tempFileURL) || ''
+    __avatarCache[str] = url
+    return url
+  } catch (e) {
+    return ''
+  }
+}
+
+// 批量解析成员头像，返回新的数组（增加 displayAvatarUrl 或覆盖 avatarUrl）
+const resolveMembersAvatars = async (members, { overwrite = true } = {}) => {
+  const arr = Array.isArray(members) ? members : []
+  const resolved = await Promise.all(
+    arr.map(async (m) => {
+      const url = await resolveAvatarUrl(m.avatarUrl || '')
+      return overwrite ? { ...m, avatarUrl: url } : { ...m, displayAvatarUrl: url }
+    })
+  )
+  return resolved
+}
+
 module.exports = {
   formatTime,
   formatDate,
@@ -135,5 +171,7 @@ module.exports = {
   validateEmail,
   uniqueArray,
   getRandomColor,
-  getMemberById
+  getMemberById,
+  resolveAvatarUrl,
+  resolveMembersAvatars
 }

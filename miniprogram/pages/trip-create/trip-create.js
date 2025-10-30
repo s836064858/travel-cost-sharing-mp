@@ -108,19 +108,22 @@ Page({
         this.setData({ qrcodeFileID: trip.qrcodeFileID, qrcodeUrl: fileObj.tempFileURL || '' })
       }
 
-      // 映射成员列表用于页面展示
-      const uiMembers = members.map((m) => {
-        const initials = m.name.slice(-2)
-        const id = m.openid ? m.openid : `name:${m.name}`
-        return {
-          id,
-          openid: m.openid,
-          name: m.name,
-          initials,
-          avatarUrl: m.avatarUrl || '',
-          isCreator: !!m.isCreator
-        }
-      })
+      // 映射成员列表用于页面展示（解析头像文件ID为临时链接）
+      const uiMembers = await Promise.all(
+        members.map(async (m) => {
+          const initials = m.name.slice(-2)
+          const id = m.openid ? m.openid : `name:${m.name}`
+          const resolved = await util.resolveAvatarUrl(m.avatarUrl || '')
+          return {
+            id,
+            openid: m.openid,
+            name: m.name,
+            initials,
+            avatarUrl: resolved,
+            isCreator: !!m.isCreator
+          }
+        })
+      )
 
       const isCreator = !!(trip && trip.creatorOpenid && trip.creatorOpenid === app.globalData.openid)
       this.setData({

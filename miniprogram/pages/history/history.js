@@ -1,5 +1,6 @@
 // pages/history/history.js
 const app = getApp()
+const { resolveMembersAvatars } = require('../../utils/util')
 
 Page({
   data: {
@@ -41,13 +42,14 @@ Page({
       })
 
       if (result.result.success) {
-        const trips = (result.result.data || []).map((t) => ({
-          ...t,
-          members: (t.members || []).map((m) => ({
-            ...m,
-            initials: m.name.slice(-2)
-          }))
-        }))
+        const rawTrips = result.result.data || []
+        const trips = await Promise.all(
+          rawTrips.map(async (t) => {
+            const members = await resolveMembersAvatars(t.members || [])
+            const enrichedMembers = members.map((m) => ({ ...m, initials: (m.name || '').slice(-2) }))
+            return { ...t, members: enrichedMembers }
+          })
+        )
         console.log(trips)
         this.setData({ trips })
       } else {

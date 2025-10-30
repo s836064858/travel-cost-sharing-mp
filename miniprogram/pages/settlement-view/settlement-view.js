@@ -1,5 +1,5 @@
 const { getShortName } = require('../../utils/format')
-const { getMemberById } = require('../../utils/util')
+const { getMemberById, resolveAvatarUrl } = require('../../utils/util')
 Page({
   data: {
     tripId: '',
@@ -46,19 +46,21 @@ Page({
 
         if (finalData && Array.isArray(finalData.settlements) && finalData.settlements.length > 0) {
           // 已结算，直接展示结果（富化展示字段）
-          const enriched = finalData.settlements.map((s, idx) => ({
-            _id: `${s.fromMemberId}-${s.toMemberId}-${idx}`,
-            fromMemberId: s.fromMemberId,
-            toMemberId: s.toMemberId,
-            fromName: getMemberById(this.data.members, s.fromMemberId).name || '未知成员',
-            toName: getMemberById(this.data.members, s.toMemberId).name || '未知成员',
-            fromAvatarUrl: getMemberById(this.data.members, s.fromMemberId).avatarUrl || '',
-            toAvatarUrl: getMemberById(this.data.members, s.toMemberId).avatarUrl || '',
-            fromShortName: getShortName(getMemberById(this.data.members, s.fromMemberId).name || ''),
-            toShortName: getShortName(getMemberById(this.data.members, s.toMemberId).name || ''),
-            amount: s.amount,
-            status: 'final'
-          }))
+          const enriched = await Promise.all(
+            finalData.settlements.map(async (s, idx) => ({
+              _id: `${s.fromMemberId}-${s.toMemberId}-${idx}`,
+              fromMemberId: s.fromMemberId,
+              toMemberId: s.toMemberId,
+              fromName: getMemberById(this.data.members, s.fromMemberId).name || '未知成员',
+              toName: getMemberById(this.data.members, s.toMemberId).name || '未知成员',
+              fromAvatarUrl: await resolveAvatarUrl(getMemberById(this.data.members, s.fromMemberId).avatarUrl || ''),
+              toAvatarUrl: await resolveAvatarUrl(getMemberById(this.data.members, s.toMemberId).avatarUrl || ''),
+              fromShortName: getShortName(getMemberById(this.data.members, s.fromMemberId).name || ''),
+              toShortName: getShortName(getMemberById(this.data.members, s.toMemberId).name || ''),
+              amount: s.amount,
+              status: 'final'
+            }))
+          )
           this.setData({
             settlements: enriched,
             isFinalized: true,
@@ -94,19 +96,21 @@ Page({
       })
       const list = res.result.success ? res.result.data || [] : []
       // 为前端展示添加 _id 与状态字段（建议）
-      const settlements = list.map((s, idx) => ({
-        _id: `${s.fromMemberId}-${s.toMemberId}-${idx}`,
-        fromMemberId: s.fromMemberId,
-        toMemberId: s.toMemberId,
-        fromName: getMemberById(this.data.members, s.fromMemberId).name || '未知成员',
-        toName: getMemberById(this.data.members, s.toMemberId).name || '未知成员',
-        fromAvatarUrl: getMemberById(this.data.members, s.fromMemberId).avatarUrl || '',
-        toAvatarUrl: getMemberById(this.data.members, s.toMemberId).avatarUrl || '',
-        fromShortName: getShortName(getMemberById(this.data.members, s.fromMemberId).name || ''),
-        toShortName: getShortName(getMemberById(this.data.members, s.toMemberId).name || ''),
-        amount: s.amount,
-        status: 'suggested'
-      }))
+      const settlements = await Promise.all(
+        list.map(async (s, idx) => ({
+          _id: `${s.fromMemberId}-${s.toMemberId}-${idx}`,
+          fromMemberId: s.fromMemberId,
+          toMemberId: s.toMemberId,
+          fromName: getMemberById(this.data.members, s.fromMemberId).name || '未知成员',
+          toName: getMemberById(this.data.members, s.toMemberId).name || '未知成员',
+          fromAvatarUrl: await resolveAvatarUrl(getMemberById(this.data.members, s.fromMemberId).avatarUrl || ''),
+          toAvatarUrl: await resolveAvatarUrl(getMemberById(this.data.members, s.toMemberId).avatarUrl || ''),
+          fromShortName: getShortName(getMemberById(this.data.members, s.fromMemberId).name || ''),
+          toShortName: getShortName(getMemberById(this.data.members, s.toMemberId).name || ''),
+          amount: s.amount,
+          status: 'suggested'
+        }))
+      )
       console.log('settlements', settlements)
       this.setData({ settlements })
     } catch (error) {

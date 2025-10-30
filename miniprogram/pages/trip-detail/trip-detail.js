@@ -1,6 +1,6 @@
 // pages/trip-detail/trip-detail.js
 const app = getApp()
-const { getMemberById } = require('../../utils/util')
+const { getMemberById, resolveAvatarUrl } = require('../../utils/util')
 
 Page({
   data: {
@@ -35,28 +35,30 @@ Page({
         this.setData({ trip })
 
         // 过滤活跃成员
-        const activeMembers = trip.members
-          .filter((member) => member.active)
-          .map((m) => ({
+        const activeMembersRaw = trip.members.filter((member) => member.active)
+        const activeMembers = await Promise.all(
+          activeMembersRaw.map(async (m) => ({
             ...m,
-            initials: (m.name || '').slice(-2)
+            initials: (m.name || '').slice(-2),
+            avatarUrl: await resolveAvatarUrl(m.avatarUrl || '')
           }))
-        // 为每个成员计算代理人对象，避免在 WXML 中调用方法
-        const withAgents = activeMembers.map((m) => {
-          const agent = m.agentMemberId ? getMemberById(activeMembers, m.agentMemberId) : {}
-          return {
-            ...m,
-            agent:
+        )
+        // 为每个成员计算代理人对象（异步解析头像），避免在 WXML 中调用方法
+        const withAgents = await Promise.all(
+          activeMembers.map(async (m) => {
+            const agent = m.agentMemberId ? getMemberById(activeMembers, m.agentMemberId) : null
+            const agentResolved =
               agent && agent.id
                 ? {
                     id: agent.id,
                     name: agent.name,
-                    avatarUrl: agent.avatarUrl,
+                    avatarUrl: await resolveAvatarUrl(agent.avatarUrl || ''),
                     initials: (agent.name || '').slice(-2)
                   }
                 : null
-          }
-        })
+            return { ...m, agent: agentResolved }
+          })
+        )
         this.setData({ activeMembers: withAgents })
 
         await this.loadRecentBills()

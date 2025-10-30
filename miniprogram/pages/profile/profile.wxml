@@ -2,8 +2,8 @@
   <view class="card">
     <view class="section-title">头像</view>
     <view class="avatar-row">
-      <block wx:if="{{avatarUrl}}">
-        <image class="avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
+      <block wx:if="{{ avatarPreviewUrl }}">
+        <image class="avatar" src="{{ avatarPreviewUrl }}" mode="aspectFill"></image>
       </block>
       <block wx:else>
         <view class="avatar avatar-placeholder">未设置</view>
@@ -14,7 +14,7 @@
 
   <view class="card">
     <view class="section-title">昵称</view>
-    <input class="input-field" bindinput="onNickInput" placeholder="请输入昵称" value="{{nickName}}" />
+    <input class="input-field" type="nickname" bindinput="onNickInput" placeholder="请输入昵称" value="{{ nickName }}" />
   </view>
 
   <view class="card actions">

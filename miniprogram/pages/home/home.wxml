@@ -9,7 +9,7 @@
   <view class="card user-info">
     <view class="user-row">
       <view class="user-avatar">
-        <image src="{{ (userInfo && userInfo.avatarUrl) || defaultAvatar }}" mode="aspectFill"></image>
+        <image src="{{ (userInfo && userInfo.avatarPreviewUrl) || defaultAvatar }}" mode="aspectFill"></image>
       </view>
       <view class="user-meta">
         <view class="user-name">{{ (userInfo && userInfo.nickName) || '未授权用户' }}</view>

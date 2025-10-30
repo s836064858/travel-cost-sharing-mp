@@ -1,4 +1,5 @@
 const { getShortName } = require('../../utils/format')
+const { resolveMembersAvatars } = require('../../utils/util')
 Page({
   data: {
     tripId: '',
@@ -61,7 +62,8 @@ Page({
       if (result.result.success) {
         const trip = result.result.data
         const activeMembers = trip.members.filter((member) => member.active)
-        const enrichedMembers = activeMembers.map((m) => ({
+        const resolvedMembers = await resolveMembersAvatars(activeMembers)
+        const enrichedMembers = resolvedMembers.map((m) => ({
           ...m,
           id: String(m.id),
           shortName: getShortName(m.name || ''),
