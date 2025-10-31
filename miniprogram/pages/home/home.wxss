@@ -1,77 +1,286 @@
 /* pages/home/home.wxss */
-.user-info {
-  display: flex;
-  align-items: center;
+/* 全局样式重置 */
+
+/* 页面容器 */
+.page-container {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 40rpx;
+}
+
+/* 顶部背景 */
+.top-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 300rpx;
+  background: linear-gradient(135deg, #07c160 0%, #009688 100%);
+  z-index: 0;
+}
+
+/* 内容包装器 */
+.content-wrapper {
+  position: relative;
+  z-index: 1;
   padding: 30rpx;
 }
 
-.user-avatar {
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 20rpx;
+/* 头部区域 */
+.hero {
+  color: #fff;
+  margin-bottom: 30rpx;
+  padding-top: 20rpx;
 }
 
-.user-avatar image {
+.brand {
+  font-size: 56rpx;
+  font-weight: 700;
+  margin-bottom: 12rpx;
+  letter-spacing: 2rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  opacity: 0.95;
+}
+
+/* 卡片阴影效果 */
+.card-shadow {
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.08);
+  margin-bottom: 24rpx;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-shadow:active {
+  transform: scale(0.98);
+}
+
+/* 用户信息卡片 */
+.user-card {
+  padding: 36rpx;
+}
+
+.user-header {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.user-avatar {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.15);
+}
+
+.avatar-image {
   width: 100%;
   height: 100%;
 }
 
+.user-details {
+  flex: 1;
+}
+
 .user-name {
-  font-size: 36rpx;
-  font-weight: bold;
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
 }
 
-/* 新增首页样式 */
-.hero {
-  background: linear-gradient(135deg, #6ee7b7 0%, #3b82f6 100%);
+.user-welcome {
+  font-size: 28rpx;
+  color: #666;
+}
+
+  /* 编辑资料按钮 */
+  .edit-profile-btn {
+  background: linear-gradient(135deg, #07c160 0%, #009688 100%);
+  padding: 16rpx 32rpx;
+  border-radius: 36rpx;
+}
+
+.btn-text {
   color: #fff;
-  border-radius: 12rpx;
-  padding: 40rpx 30rpx;
-  margin-bottom: 20rpx;
-}
-.brand {
-  font-size: 48rpx;
-  font-weight: 700;
-}
-.subtitle {
-  margin-top: 8rpx;
-  opacity: 0.9;
+  font-size: 26rpx;
+  font-weight: 500;
 }
 
-.user-row {
+/* 卡片头部通用样式 */
+.card-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 20rpx;
+  padding: 30rpx 36rpx 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
 }
-.user-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 6rpx;
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
 }
-.user-action {
-  color: #07c160;
-  font-size: 26rpx;
+
+.toggle-icon {
+  font-size: 24rpx;
+  color: #999;
+  transition: transform 0.3s ease;
+}
+
+/* 快捷操作卡片 */
+.actions-card {
+  padding: 0 36rpx 36rpx;
 }
 
 .actions-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20rpx;
+  gap: 30rpx;
+  margin-top: 30rpx;
 }
-.grid-item {
-  background: #f7f7f7;
-  border-radius: 12rpx;
-  padding: 24rpx;
-  text-align: center;
+
+.action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
 }
-.grid-icon {
-  width: 64rpx;
-  height: 64rpx;
+
+.action-icon {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
-.grid-label {
-  margin-top: 8rpx;
-  font-size: 28rpx;
+
+.create-icon {
+  background: linear-gradient(135deg, #07c160 0%, #009688 100%);
+}
+
+.history-icon {
+  background: linear-gradient(135deg, #fbbf24 0%, #f87171 100%);
+}
+
+.icon-text {
+  color: #fff;
+  font-size: 72rpx;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.action-img {
+  width: 70rpx;
+  height: 70rpx;
+  filter: brightness(0) invert(1);
+}
+
+.action-label {
+  font-size: 30rpx;
   color: #333;
+  font-weight: 500;
+}
+
+/* 功能介绍卡片 */
+.features-card {
+  padding: 0 36rpx 36rpx;
+}
+
+.features-list {
+  margin-top: 20rpx;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.feature-item:last-child {
+  border-bottom: none;
+}
+
+.feature-icon {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.feature-icon image {
+  width: 100%;
+  height: 100%;
+}
+
+.feature-content {
+  flex: 1;
+}
+
+.feature-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+
+.feature-desc {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 使用须知折叠面板 */
+.tips-card {
+  padding: 0 36rpx 20rpx;
+}
+
+.tips-content {
+  padding: 20rpx 0;
+}
+
+.tip-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.tip-item:last-child {
+  margin-bottom: 0;
+}
+
+.tip-number {
+  width: 36rpx;
+  height: 36rpx;
+  background: linear-gradient(135deg, #07c160 0%, #009688 100%);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 24rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 4rpx;
+}
+
+.tip-text {
+  flex: 1;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
 }

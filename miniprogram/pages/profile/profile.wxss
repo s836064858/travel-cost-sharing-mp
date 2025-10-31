@@ -1,21 +1,48 @@
 /* pages/profile/profile.wxss */
 
+/* 页面容器 */
 .page-container {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* 顶部背景 */
+.top-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200rpx;
+  background: linear-gradient(135deg, #07c160 0%, #009688 100%);
+  z-index: 0;
+}
+
+/* 内容包装器 */
+.content-wrapper {
+  position: relative;
+  z-index: 1;
   padding: 24rpx;
 }
 
-.card {
+.card-shadow {
   background: #fff;
-  border-radius: 12rpx;
-  padding: 24rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
-  margin-bottom: 20rpx;
+  border-radius: 20rpx;
+  padding: 32rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.08);
+  margin-bottom: 24rpx;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-shadow:active {
+  transform: scale(0.99);
 }
 
 .section-title {
-  font-size: 32rpx;
+  font-size: 34rpx;
   font-weight: 600;
-  margin-bottom: 16rpx;
+  color: #333;
+  margin-bottom: 24rpx;
 }
 
 .avatar-row {
@@ -25,8 +52,8 @@
 }
 
 .avatar {
-  width: 120rpx;
-  height: 120rpx;
+  width: 160rpx;
+  height: 160rpx;
   border-radius: 50%;
   overflow: hidden;
   background: #f7f7f7;
@@ -34,7 +61,8 @@
   align-items: center;
   justify-content: center;
   color: #999;
-  font-size: 24rpx;
+  font-size: 28rpx;
+  border: 4rpx solid #f5f5f5;
 }
 
 .avatar-placeholder {
@@ -42,11 +70,13 @@
 }
 
 .input-field {
-  /* width: 100%; */
+  width: 100%;
   background: #f7f7f7;
-  border-radius: 8rpx;
-  padding: 20rpx;
-  font-size: 28rpx;
+  border-radius: 12rpx;
+  padding: 24rpx 28rpx;
+  font-size: 30rpx;
+  color: #333;
+  border: none;
 }
 
 .actions {
@@ -55,17 +85,32 @@
 }
 
 .btn-primary {
-  background: #07c160;
+  background: linear-gradient(135deg, #07c160 0%, #009688 100%);
   color: #fff;
   border: none;
-  padding: 20rpx 32rpx;
-  border-radius: 8rpx;
+  padding: 24rpx 64rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  box-shadow: 0 4rpx 16rpx rgba(7, 193, 96, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(7, 193, 96, 0.2);
 }
 
 .btn-secondary {
   background: #f0f0f0;
   color: #333;
   border: none;
-  padding: 20rpx 32rpx;
-  border-radius: 8rpx;
+  padding: 20rpx 36rpx;
+  border-radius: 32rpx;
+  font-size: 28rpx;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:active {
+  background: #e6e6e6;
 }

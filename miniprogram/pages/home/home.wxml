@@ -1,43 +1,116 @@
 <!-- pages/home/home.wxml -->
 <view class="page-container">
-  <!-- 头部形象区 -->
-  <view class="hero">
-    <view class="brand">四月旅行账单</view>
-    <view class="subtitle">旅行分摊 · 简洁清晰</view>
-  </view>
-  <!-- 用户信息区域（未授权占位） -->
-  <view class="card user-info">
-    <view class="user-row">
-      <view class="user-avatar">
-        <image src="{{ (userInfo && avatarPreviewUrl) || defaultAvatar }}" mode="aspectFill"></image>
-      </view>
-      <view class="user-meta">
-        <view class="user-name">{{ (userInfo && userInfo.nickName) || '未授权用户' }}</view>
-        <view class="user-action" bindtap="editProfile">编辑个人资料</view>
+  <!-- 顶部背景 -->
+  <view class="top-bg"></view>
+  
+  <!-- 主要内容区域 -->
+  <view class="content-wrapper">
+    <!-- 头部形象区 -->
+    <view class="hero">
+      <view class="brand">四月旅行账单</view>
+      <view class="subtitle">轻松分摊旅行费用，让友谊更长久</view>
+    </view>
+    
+    <!-- 用户信息卡片 -->
+    <view class="user-card card-shadow">
+      <view class="user-header">
+        <view class="user-avatar">
+          <image class="avatar-image" src="{{ (userInfo && avatarPreviewUrl) || defaultAvatar }}" mode="aspectFill"></image>
+        </view>
+        <view class="user-details">
+          <view class="user-name">{{ (userInfo && userInfo.nickName) || '未授权用户' }}</view>
+          <view class="user-welcome">欢迎使用四月旅行账单</view>
+        </view>
+        <view class="edit-profile-btn" bindtap="editProfile">
+          <text class="btn-text">编辑资料</text>
+        </view>
       </view>
     </view>
-  </view>
-  <!-- 操作入口 -->
-  <view class="card">
-    <view class="section-title">快捷入口</view>
-    <view class="actions-grid">
-      <view class="grid-item" bindtap="createNewTrip">
-        <image class="grid-icon" src="../../images/home.png" mode="widthFix"></image>
-        <view class="grid-label">创建旅行</view>
+    
+    <!-- 快捷操作卡片 -->
+    <view class="actions-card card-shadow">
+      <view class="card-header">
+        <view class="section-title">快捷操作</view>
       </view>
-      <view class="grid-item" bindtap="goToHistory">
-        <image class="grid-icon" src="../../images/history.png" mode="widthFix"></image>
-        <view class="grid-label">历史记录</view>
+      <view class="actions-grid">
+        <view class="action-item" bindtap="createNewTrip">
+          <view class="action-icon create-icon">
+            <text class="icon-text">+</text>
+          </view>
+          <view class="action-label">创建旅行</view>
+        </view>
+        <view class="action-item" bindtap="goToHistory">
+          <view class="action-icon history-icon">
+            <image class="action-img" src="../../images/history.png" mode="widthFix"></image>
+          </view>
+          <view class="action-label">历史记录</view>
+        </view>
       </view>
     </view>
-  </view>
-  <!-- 使用须知 -->
-  <view class="card">
-    <view class="section-title">使用须知</view>
-    <view class="tip-text">· 个人资料：设置头像与昵称，头像将保存为云文件ID并在前端解析为临时链接</view>
-    <view class="tip-text">· 创建旅行：生成二维码邀请成员（满2人可创建账单），支持移除成员</view>
-    <view class="tip-text">· 账单记录：选择付款人与参与者，支持均分与自定义分摊</view>
-    <view class="tip-text">· 代理关系：成员可设置代理人，结算建议会按代理聚合计算</view>
-    <view class="tip-text">· 结算视图：查看建议或最终结算，确认后可关闭行程</view>
+    
+    <!-- 功能介绍卡片 -->
+    <view class="features-card card-shadow">
+      <view class="card-header">
+        <view class="section-title">功能介绍</view>
+      </view>
+      <view class="features-list">
+        <view class="feature-item">
+          <view class="feature-icon">
+          <image src="../../images/1.png" mode="aspectFit"></image>
+        </view>
+          <view class="feature-content">
+            <view class="feature-title">团队旅行记账</view>
+            <view class="feature-desc">轻松管理多人旅行的所有费用</view>
+          </view>
+        </view>
+        <view class="feature-item">
+          <view class="feature-icon">
+          <image src="../../images/2.png" mode="aspectFit"></image>
+        </view>
+          <view class="feature-content">
+            <view class="feature-title">智能分摊</view>
+            <view class="feature-desc">支持均分和自定义比例分摊</view>
+          </view>
+        </view>
+        <view class="feature-item">
+          <view class="feature-icon">
+          <image src="../../images/3.png" mode="aspectFit"></image>
+        </view>
+          <view class="feature-content">
+            <view class="feature-title">清晰结算</view>
+            <view class="feature-desc">自动计算最优结算方案</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 使用须知 -->
+    <view class="tips-card card-shadow">
+      <view class="card-header">
+        <view class="section-title">使用须知</view>
+      </view>
+      <view class="tips-content">
+        <view class="tip-item">
+          <view class="tip-number">1</view>
+          <view class="tip-text">设置个人头像与昵称，便于团队识别</view>
+        </view>
+        <view class="tip-item">
+          <view class="tip-number">2</view>
+          <view class="tip-text">创建旅行后生成二维码邀请成员参与</view>
+        </view>
+        <view class="tip-item">
+          <view class="tip-number">3</view>
+          <view class="tip-text">记录账单时选择付款人与参与者</view>
+        </view>
+        <view class="tip-item">
+          <view class="tip-number">4</view>
+          <view class="tip-text">可设置成员代理关系，结算时智能聚合</view>
+        </view>
+        <view class="tip-item">
+          <view class="tip-number">5</view>
+          <view class="tip-text">行程结束后查看结算建议并确认</view>
+        </view>
+      </view>
+    </view>
   </view>
 </view>
