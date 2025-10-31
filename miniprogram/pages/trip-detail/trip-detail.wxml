@@ -1,81 +1,93 @@
 <!-- pages/trip-detail/trip-detail.wxml -->
 <view class="page-container">
-  <!-- 旅行基本信息 -->
-  <view class="card trip-info">
-    <view class="trip-header">
-      <text class="trip-name">{{ trip.name }}</text>
-      <text class="trip-status {{ trip.status }}">{{ trip.status === 'created' ? '未开始' : trip.status === 'ongoing' ? '进行中' : '已结束' }} </text>
-    </view>
-  </view>
-  <!-- 功能入口 -->
-  <view class="card actions-section" wx:if="{{ trip.status === 'ongoing' }}">
-    <view class="action-grid">
-      <view class="action-item" bindtap="addBill">
-        <text class="action-icon">💰</text>
-        <text class="action-text">增加账单</text>
-      </view>
-      <view class="action-item" bindtap="addMember">
-        <text class="action-icon">➕</text>
-        <text class="action-text">新增成员</text>
-      </view>
-      <view class="action-item" bindtap="endTrip">
-        <text class="action-icon">🏁</text>
-        <text class="action-text">结束旅行</text>
+  <!-- 顶部背景，与首页一致 -->
+  <view class="top-bg"></view>
+
+  <!-- 内容区域包裹，与首页一致 -->
+  <view class="content-wrapper">
+    <!-- 旅行基本信息 -->
+    <view class="card card-shadow trip-info">
+      <view class="trip-header">
+        <text class="trip-name">{{ trip.name }}</text>
+        <text class="trip-status {{ trip.status }}">{{ trip.status === 'created' ? '未开始' : trip.status === 'ongoing' ? '进行中' : '已结束' }} </text>
       </view>
     </view>
-  </view>
-  <!-- 成员列表 -->
-  <view class="card members-section">
-    <view class="section-header">
-      <text class="section-title">成员列表 {{ activeMembers.length }}人</text>
-    </view>
-    <view class="members-list">
-      <view wx:for="{{ activeMembers }}" wx:key="id" class="member-item">
-        <view class="member-avatar">
-          <image wx:if="{{ item.avatarUrl }}" src="{{ item.avatarUrl }}" mode="aspectFill" />
-          <view wx:else class="text-avatar">{{ item.initials }}</view>
+    <!-- 功能入口 -->
+    <view class="card card-shadow actions-section" wx:if="{{ trip.status === 'ongoing' }}">
+      <view class="action-grid">
+        <view class="action-item" bindtap="addBill">
+          <text class="action-icon">💰</text>
+          <text class="action-text">增加账单</text>
         </view>
-        <view class="member-info">
-          <text class="member-name">{{ item.name }}</text>
-          <view class="member-agent" style="display: flex; align-items: center" wx:if="{{ item.agent }}">
-            <text style="font-size: 24rpx; color: #666">代理：</text>
-            <view class="member-avatar" style="width: 56rpx; height: 56rpx; border: 2rpx solid #07c160">
-              <image wx:if="{{ item.agent.avatarUrl }}" src="{{ item.agent.avatarUrl }}" mode="aspectFill" />
-              <view wx:else class="text-avatar">{{ item.agent.initials }}</view>
-            </view>
+        <view class="action-item" bindtap="addMember">
+          <text class="action-icon">➕</text>
+          <text class="action-text">新增成员</text>
+        </view>
+        <view class="action-item" bindtap="endTrip">
+          <text class="action-icon">🏁</text>
+          <text class="action-text">结束旅行</text>
+        </view>
+      </view>
+    </view>
+    <!-- 成员列表 -->
+    <view class="card card-shadow members-section">
+      <view class="section-header">
+        <text class="section-title">成员列表 {{ activeMembers.length }}人</text>
+      </view>
+      <view class="members-list">
+        <view wx:for="{{ activeMembers }}" wx:key="id" class="member-item">
+          <view class="member-avatar">
+            <image wx:if="{{ item.avatarUrl }}" src="{{ item.avatarUrl }}" mode="aspectFill" />
+            <view wx:else class="text-avatar">{{ item.initials }}</view>
           </view>
-        </view>
-        <button class="btn-secondary" bindtap="setMemberAgent" data-member-id="{{ item.id }}" wx:if="{{ trip.status !== 'closed' }}">设代理</button>
-      </view>
-    </view>
-  </view>
-  <!-- 最近账单 -->
-  <view class="card bills-section" wx:if="{{ trip.status === 'ongoing' }}">
-    <view class="section-header">
-      <text class="section-title">最近账单</text>
-    </view>
-    <view class="bills-list">
-      <view wx:for="{{ recentBills }}" wx:key="_id" class="bill-item" bindtap="editBill" data-bill="{{ item }}">
-        <view class="bill-header">
-          <view class="bill-category {{ item.category }}">{{ item.categoryText }}</view>
-          <text class="bill-amount">{{ item.amount }}</text>
-        </view>
-        <view class="bill-info">
-          <view class="bill-participants">
-            <text class="bill-participants-label">支付与参与</text>
-            <view class="avatars-list stacked">
-              <view wx:for="{{ item.displayParticipants }}" wx:for-item="p" wx:for-index="idx" wx:key="id" class="avatar-small {{ idx === 0 ? 'payer' : '' }}">
-                <image wx:if="{{ p.avatarUrl }}" src="{{ p.avatarUrl }}" mode="aspectFill" />
-                <view wx:else class="text-avatar-small">{{ p.initials }}</view>
-                <view wx:if="{{ idx === 0 }}" class="avatar-badge">付</view>
+          <view class="member-info">
+            <text class="member-name">{{ item.name }}</text>
+            <view class="member-agent" style="display: flex; align-items: center" wx:if="{{ item.agent }}">
+              <text style="font-size: 24rpx; color: #666">代理：</text>
+              <view class="member-avatar" style="width: 56rpx; height: 56rpx; border: 2rpx solid #07c160">
+                <image wx:if="{{ item.agent.avatarUrl }}" src="{{ item.agent.avatarUrl }}" mode="aspectFill" />
+                <view wx:else class="text-avatar">{{ item.agent.initials }}</view>
               </view>
             </view>
           </view>
-          <text class="bill-date">{{ item.date }}</text>
+          <view class="btn-secondary" bindtap="setMemberAgent" data-member-id="{{ item.id }}" wx:if="{{ trip.status !== 'closed' }}">设代理</view>
         </view>
       </view>
-      <view class="empty-bills" wx:if="{{ recentBills.length === 0 }}">
-        <text>暂无账单记录</text>
+    </view>
+    <!-- 最近账单 -->
+    <view class="card card-shadow bills-section" wx:if="{{ trip.status === 'ongoing' }}">
+      <view class="section-header">
+        <text class="section-title">最近账单</text>
+      </view>
+      <view class="bills-list">
+        <view wx:for="{{ recentBills }}" wx:key="_id" class="bill-item" bindtap="editBill" data-bill="{{ item }}">
+          <view class="bill-header">
+            <view class="bill-category {{ item.category }}">{{ item.categoryText }}</view>
+            <text class="bill-amount">¥{{ item.amount }}</text>
+          </view>
+          <view class="bill-info">
+            <view class="bill-participants">
+              <text class="bill-participants-label">支付与参与</text>
+              <view class="avatars-list stacked">
+                <view
+                  wx:for="{{ item.displayParticipants }}"
+                  wx:for-item="p"
+                  wx:for-index="idx"
+                  wx:key="id"
+                  class="avatar-small {{ idx === 0 ? 'payer' : '' }}"
+                >
+                  <image wx:if="{{ p.avatarUrl }}" src="{{ p.avatarUrl }}" mode="aspectFill" />
+                  <view wx:else class="text-avatar-small">{{ p.initials }}</view>
+                  <view wx:if="{{ idx === 0 }}" class="avatar-badge">付</view>
+                </view>
+              </view>
+            </view>
+            <text class="bill-date">{{ item.date }}</text>
+          </view>
+        </view>
+        <view class="empty-bills" wx:if="{{ recentBills.length === 0 }}">
+          <text>暂无账单记录</text>
+        </view>
       </view>
     </view>
   </view>

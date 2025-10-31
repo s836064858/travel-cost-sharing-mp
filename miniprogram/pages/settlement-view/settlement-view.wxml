@@ -1,7 +1,9 @@
 <!-- pages/settlement-view/settlement-view.wxml -->
 <view class="page-container">
+    <view class="top-bg"></view>
+    <view class="content-wrapper">
     <!-- 结算建议 -->
-    <view class="card settlement-section">
+    <view class="card card-shadow settlement-section">
         <view class="section-header">
             <text class="section-title">结算建议</text>
             <view class="header-actions">
@@ -37,8 +39,9 @@
                 <text>暂无结算建议</text>
             </view>
         </view>
-        <button class="btn-confirm" wx:if="{{showConfirmButton}}" bindtap="confirmSettlement">
+        <view class="btn-confirm" wx:if="{{showConfirmButton}}" bindtap="confirmSettlement">
             确认结算
-        </button>
+        </view>
+    </view>
     </view>
 </view>

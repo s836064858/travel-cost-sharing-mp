@@ -12,7 +12,8 @@
 
 .section-title {
   font-size: 32rpx;
-  font-weight: bold;
+  font-weight: 600;
+  color: #333;
 }
 
 .section-subtitle {
@@ -144,4 +145,61 @@
   box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.08);
   border: 2rpx solid #fff;
   z-index: 2;
+}
+
+/* 确认结算按钮 */
+.btn-confirm {
+  background: linear-gradient(135deg, #07c160 0%, #009688 100%);
+  color: #fff;
+  border-radius: 36rpx;
+  padding: 20rpx 32rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  margin-top: 20rpx;
+}
+
+.btn-confirm:active {
+  opacity: 0.92;
+}
+/* 页面容器 与首页一致 */
+.page-container {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 40rpx;
+}
+
+/* 顶部背景 与首页一致 */
+.top-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 300rpx;
+  background: linear-gradient(135deg, #07c160 0%, #009688 100%);
+  z-index: 0;
+}
+
+/* 内容包装 与首页一致 */
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  padding: 30rpx;
+}
+
+/* 卡片阴影 与首页统一 */
+.card-shadow {
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.08);
+  margin-bottom: 24rpx;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-shadow:active {
+  transform: scale(0.98);
 }

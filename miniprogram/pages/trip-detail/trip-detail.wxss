@@ -71,7 +71,8 @@
 
 .section-title {
   font-size: 32rpx;
-  font-weight: bold;
+  font-weight: 600;
+  color: #333;
 }
 
 .members-list {
@@ -82,8 +83,8 @@
 
 .member-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 20rpx;
   padding: 20rpx 0;
   border-bottom: 1rpx solid #f0f0f0;
 }
@@ -94,18 +95,19 @@
 
 .member-info {
   flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
 }
 
 .member-name {
-  display: block;
   font-size: 32rpx;
-  font-weight: bold;
-  margin-bottom: 8rpx;
+  font-weight: 600;
 }
 
 .member-agent {
   font-size: 24rpx;
-  color: #999;
+  color: #8c8c8c;
 }
 
 .bills-section {
@@ -299,4 +301,59 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.08);
+}
+/* 页面容器 与首页一致 */
+.page-container {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 40rpx;
+}
+
+/* 顶部背景 与首页一致 */
+.top-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 300rpx;
+  background: linear-gradient(135deg, #07c160 0%, #009688 100%);
+  z-index: 0;
+}
+
+/* 内容包装 与首页一致 */
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  padding: 30rpx;
+}
+
+/* 卡片阴影 与首页统一 */
+.card-shadow {
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.08);
+  margin-bottom: 24rpx;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-shadow:active {
+  transform: scale(0.98);
+}
+/* 次要按钮样式（用于设代理） */
+.btn-secondary {
+  background: #f7f7f7;
+  color: #333;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 24rpx;
+  padding: 12rpx 24rpx;
+  font-size: 26rpx;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary:active {
+  background: #e8e8e8;
 }

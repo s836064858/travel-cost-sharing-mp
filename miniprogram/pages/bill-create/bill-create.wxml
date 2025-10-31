@@ -1,9 +1,11 @@
 <!-- pages/bill-create/bill-create.wxml -->
 <view class="page-container">
+  <view class="top-bg"></view>
+  <view class="content-wrapper">
   <view class="page-header">
     <text class="page-title">{{ billId ? '编辑账单' : '新增账单' }}</text>
   </view>
-  <view class="card">
+  <view class="card card-shadow">
     <form bindsubmit="submitBill">
       <view class="section">
         <text class="section-title">基本信息</text>
@@ -122,12 +124,13 @@
       </view>
       <!-- 操作按钮 -->
       <view class="action-buttons">
-        <button class="btn-danger" wx:if="{{ billId }}" bindtap="deleteBill">删除账单</button>
-        <button class="btn-secondary" wx:if="{{ billId }}" bindtap="cancelEdit">取消</button>
+        <view class="btn-danger" wx:if="{{ billId }}" bindtap="deleteBill">删除账单</view>
+        <view class="btn-secondary" wx:if="{{ billId }}" bindtap="cancelEdit">取消</view>
         <button class="btn-primary" formType="submit" disabled="{{ !isFormValid }}">
           {{ billId ? '保存修改' : '创建账单' }}
         </button>
       </view>
     </form>
+  </view>
   </view>
 </view>
